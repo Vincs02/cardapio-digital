@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class UploadController {
     public UploadController() {
         // Criar diretório se não existir
         try {
-            Path uploadPath = Paths.get(UPLOAD_DIR);
+            Path uploadPath = Path.of(UPLOAD_DIR);
             if (!Files.exists(uploadPath)) {
                 Files.createDirectories(uploadPath);
             }
@@ -69,7 +68,7 @@ public class UploadController {
             String filename = UUID.randomUUID().toString() + extension;
 
             // Salvar arquivo
-            Path filePath = Paths.get(UPLOAD_DIR + filename);
+            Path filePath = Path.of(UPLOAD_DIR + filename);
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
             // Retornar URL da imagem

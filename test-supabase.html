@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Supabase</title>
+</head>
+<body>
+    <h1>Teste de Conexão Supabase</h1>
+    <div id="status">Carregando...</div>
+    <button onclick="testarConexao()">Testar Conexão</button>
+    <div id="resultado"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // CONFIGURE AQUI SUAS CREDENCIAIS
+        const SUPABASE_URL = 'https://xcdpqxczwnfrkpkedxgw.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjZHBxeGN6d25mcmtwa2VkeGd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ1MzYxNjUsImV4cCI6MjA4MDExMjE2NX0.VH_bXfzd_2Y664bfIYwWvjqX-L-rAuUgDlY2rmPFFAs';
+
+        let supabaseClient = null;
+
+        function testarConexao() {
+            if (!SUPABASE_URL || !SUPABASE_KEY || SUPABASE_URL === 'COLE_SUA_URL_AQUI') {
+                document.getElementById('status').innerHTML = '❌ Configure as credenciais no código!';
+                return;
+            }
+
+            try {
+                supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                
+                // Testar conexão listando produtos
+                supabaseClient
+                    .from('produtos')
+                    .select('*')
+                    .then(({ data, error }) => {
+                        if (error) {
+                            document.getElementById('resultado').innerHTML = 
+                                '❌ Erro: ' + error.message;
+                        } else {
+                            document.getElementById('resultado').innerHTML = 
+                                '✅ Conexão OK!<br>Produtos encontrados: ' + (data?.length || 0) +
+                                '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                        }
+                    });
+                
+                document.getElementById('status').innerHTML = '🔄 Testando...';
+            } catch (error) {
+                document.getElementById('status').innerHTML = '❌ Erro: ' + error.message;
+            }
+        }
+
+        // Testar automaticamente ao carregar
+        window.addEventListener('load', () => {
+            if (SUPABASE_URL && SUPABASE_KEY && SUPABASE_URL !== 'COLE_SUA_URL_AQUI') {
+                testarConexao();
+            } else {
+                document.getElementById('status').innerHTML = 
+                    '⚠️ Configure SUPABASE_URL e SUPABASE_KEY no código para testar';
+            }
+        });
+    </script>
+</body>
+</html>
+

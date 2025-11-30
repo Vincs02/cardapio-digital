@@ -1,0 +1,39 @@
+# Dependências
+node_modules/
+target/
+.mvn/
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.production
+
+# Logs
+*.log
+logs/
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+
+# Build
+dist/
+build/
+.vercel/
+
+# Uploads
+uploads/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+

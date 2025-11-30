@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabor & Cia - Cardápio Digital</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon">🍽️</div>
+                <span class="logo-text">Sabor & Cia</span>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn active">Cardápio</button>
+                <button class="nav-btn">Reservar Mesa</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="hero-title">Bem-vindo ao Nosso Cardápio</h1>
+        <p class="hero-subtitle">Descubra nossos pratos especiais e saboreie uma experiência única</p>
+    </section>
+
+    <!-- Filter Bar -->
+    <section class="filters">
+        <div class="filter-container">
+            <button class="filter-btn active" data-category="todos">Todos</button>
+            <button class="filter-btn" data-category="pizzas">Pizzas</button>
+            <button class="filter-btn" data-category="bebidas">Bebidas</button>
+            <button class="filter-btn" data-category="sobremesas">Sobremesas</button>
+            <button class="filter-btn" data-category="entradas">Entradas</button>
+            <button class="filter-btn" data-category="pratos">Pratos Principais</button>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="products">
+        <div class="products-container" id="productsContainer">
+            <!-- Products will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <!-- Recomendações da Casa Carousel -->
+    <section class="recommendations">
+        <div class="recommendations-container">
+            <h2 class="recommendations-title">🍽️ Recomendações da Casa</h2>
+            <div class="carousel-wrapper">
+                <button class="carousel-btn carousel-prev" id="carouselPrev">‹</button>
+                <div class="carousel-container" id="carouselContainer">
+                    <!-- Carousel items will be dynamically inserted here -->
+                </div>
+                <button class="carousel-btn carousel-next" id="carouselNext">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Button (discreto no final) -->
+    <div class="admin-trigger" id="adminTrigger" title="Área Administrativa">
+        <span>⚙</span>
+    </div>
+
+    <!-- Modal de Reserva -->
+    <div class="modal" id="reservaModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeReserva">&times;</span>
+            <h2>Reservar Mesa</h2>
+            <form id="reservaForm">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" id="reservaNome" required>
+                </div>
+                <div class="form-group">
+                    <label>Telefone</label>
+                    <input type="tel" id="reservaTelefone" required>
+                </div>
+                <div class="form-group">
+                    <label>Data</label>
+                    <input type="date" id="reservaData" required style="color-scheme: dark;">
+                </div>
+                <div class="form-group">
+                    <label>Horário</label>
+                    <input type="time" id="reservaHora" required>
+                </div>
+                <div class="form-group">
+                    <label>Número de Pessoas</label>
+                    <input type="number" id="reservaPessoas" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Observações</label>
+                    <textarea id="reservaObs" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Confirmar Reserva</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Login Admin -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeAdminLogin">&times;</span>
+            <h2>Acesso Administrativo</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="adminPassword" required autofocus>
+                </div>
+                <button type="submit" class="btn-submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Admin -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content admin-content">
+            <span class="close-modal" id="closeAdmin">&times;</span>
+            <h2>Painel Administrativo</h2>
+            
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="list">Itens</button>
+                <button class="admin-tab" data-tab="create">Novo Item</button>
+                <button class="admin-tab" data-tab="favorites">Favoritos</button>
+                <button class="admin-tab" data-tab="reservas">Reservas</button>
+            </div>
+
+            <div class="admin-panel" id="adminList">
+                <div class="admin-search-container">
+                    <div class="admin-search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="adminSearchInput" placeholder="Buscar itens..." class="admin-search-input">
+                    </div>
+                </div>
+                <div class="admin-items-list" id="adminItemsList"></div>
+            </div>
+
+            <div class="admin-panel hidden" id="adminCreate">
+                <form id="createItemForm">
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" id="itemNome" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <textarea id="itemDescricao" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Preço</label>
+                        <input type="number" id="itemPreco" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Categoria</label>
+                        <select id="itemCategoria" required>
+                            <option value="pizzas">Pizzas</option>
+                            <option value="bebidas">Bebidas</option>
+                            <option value="sobremesas">Sobremesas</option>
+                            <option value="entradas">Entradas</option>
+                            <option value="pratos">Pratos Principais</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Imagem</label>
+                        <div style="display: flex; gap: 1rem; flex-direction: column;">
+                            <input type="file" id="itemImagemFile" accept="image/*" style="display: none;">
+                            <button type="button" class="btn-upload" onclick="document.getElementById('itemImagemFile').click()">
+                                📷 Escolher Imagem do Computador
+                            </button>
+                            <div id="imagePreview" style="margin-top: 0.5rem;"></div>
+                            <div style="margin: 0.5rem 0; text-align: center; color: rgba(255,255,255,0.5);">ou</div>
+                            <input type="url" id="itemImagem" placeholder="URL da Imagem">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="itemFavorito" style="width: auto; cursor: pointer;">
+                            <span>⭐ Marcar como Recomendação da Casa (aparece no carrossel)</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-submit">Criar Item</button>
+                </form>
+            </div>
+
+            <div class="admin-panel hidden" id="adminFavorites">
+                <div class="admin-items-list" id="favoritesList"></div>
+            </div>
+
+            <div class="admin-panel hidden" id="adminReservas">
+                <div class="admin-items-list" id="reservasList"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase Client (via CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Configuração do Supabase -->
+    <script src="supabase-client.js"></script>
+    <!-- Script principal -->
+    <script src="script.js"></script>
+    <!-- Inicializar Supabase com variáveis -->
+    <script>
+        // Configuração manual para desenvolvimento local
+        // REMOVA ESTE BLOCO EM PRODUÇÃO e use variáveis de ambiente
+        // Para produção na Vercel, configure as variáveis no dashboard
+        
+        // Descomente e preencha para testar localmente:
+        window.SUPABASE_CONFIG = {
+            VITE_SUPABASE_URL: 'https://xcdpqxczwnfrkpkedxgw.supabase.co',
+            VITE_SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjZHBxeGN6d25mcmtwa2VkeGd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ1MzYxNjUsImV4cCI6MjA4MDExMjE2NX0.VH_bXfzd_2Y664bfIYwWvjqX-L-rAuUgDlY2rmPFFAs'
+        };
+        
+        // Inicializar Supabase quando tudo carregar
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                if (typeof initSupabase === 'function') {
+                    initSupabase();
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>
+

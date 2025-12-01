@@ -17,8 +17,7 @@ export default function handler(req, res) {
     if (req.method === 'POST') {
         const { senha } = req.body;
 
-        // Senha hardcoded para manter compatibilidade com o backend Java original
-        // Vercel serverless functions não têm acesso a variáveis VITE_*
+        // Senha: 0202
         const SENHA_CORRETA = process.env.ADMIN_PASSWORD || '0202';
 
         // Trim para evitar problemas com espaços
@@ -31,8 +30,6 @@ export default function handler(req, res) {
                 mensagem: 'Autenticação bem-sucedida'
             });
         } else {
-            // Log para debug (remover em produção se necessário)
-            console.log('Tentativa de login falhou. Senha recebida:', senhaLimpa?.substring(0, 2) + '***');
             return res.status(401).json({
                 autenticado: false,
                 mensagem: 'Senha incorreta'

@@ -9,7 +9,7 @@ let products = [
         description: "Molho de tomate, mussarela fresca, manjericão e azeite de oliva extra virgem",
         price: 45.90,
         category: "pizzas",
-        image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -18,7 +18,7 @@ let products = [
         description: "Molho de tomate, mussarela, calabresa fatiada, cebola e azeitonas",
         price: 48.90,
         category: "pizzas",
-        image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -27,7 +27,7 @@ let products = [
         description: "Mussarela, gorgonzola, parmesão e provolone com azeite de oliva",
         price: 52.90,
         category: "pizzas",
-        image: "https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -36,7 +36,7 @@ let products = [
         description: "Refrigerante gelado, lata 350ml",
         price: 6.50,
         category: "bebidas",
-        image: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -45,7 +45,7 @@ let products = [
         description: "Suco fresco de laranja, 500ml",
         price: 8.90,
         category: "bebidas",
-        image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -54,7 +54,7 @@ let products = [
         description: "Água mineral natural, 500ml",
         price: 4.50,
         category: "bebidas",
-        image: "https://images.unsplash.com/photo-1548839140-5a6d0e9e0f1c?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1564419320461-6870880221ad?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -63,7 +63,7 @@ let products = [
         description: "Sobremesa italiana clássica com café, mascarpone e cacau",
         price: 18.90,
         category: "sobremesas",
-        image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -72,7 +72,7 @@ let products = [
         description: "Brownie quentinho com sorvete de creme e calda de chocolate",
         price: 16.90,
         category: "sobremesas",
-        image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1564355808539-22fda35bed7e?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -81,7 +81,7 @@ let products = [
         description: "Bolinho de chocolate quente com sorvete de baunilha",
         price: 19.90,
         category: "sobremesas",
-        image: "https://images.unsplash.com/photo-1606312619070-d48b4ddaa3b8?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -90,7 +90,7 @@ let products = [
         description: "Pão italiano tostado com tomate, manjericão e azeite",
         price: 22.90,
         category: "entradas",
-        image: "https://images.unsplash.com/photo-1572441713132-51c75654db73?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1572441713132-51c75654db73?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -99,38 +99,29 @@ let products = [
         description: "Fatias finas de carne crua com rúcula, parmesão e azeite",
         price: 35.90,
         category: "entradas",
-        image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1519623286303-27a177460f95?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
         id: 12,
-        name: "Salada Caesar",
-        description: "Alface romana, croutons, parmesão e molho caesar",
-        price: 28.90,
-        category: "entradas",
-        image: "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400&h=300&fit=crop",
-        favorite: false
-    },
-    {
-        id: 13,
         name: "Risotto de Camarão",
         description: "Arroz arbóreo cremoso com camarões frescos e ervas",
         price: 68.90,
         category: "pratos",
-        image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
-        id: 14,
+        id: 13,
         name: "Filé Mignon",
         description: "Filé mignon grelhado com batatas rústicas e molho especial",
         price: 79.90,
         category: "pratos",
-        image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
-        id: 15,
+        id: 14,
         name: "Salmão Grelhado",
         description: "Salmão grelhado com legumes salteados e molho de ervas",
         price: 72.90,
@@ -1098,7 +1089,7 @@ async function criarReservaAPI(reserva) {
                     telefone: reserva.telefone,
                     data: reserva.data,
                     horario: reserva.hora,
-                    numeroPessoas: parseInt(reserva.pessoas),
+                    numero_pessoas: parseInt(reserva.pessoas) || 1,
                     observacoes: reserva.obs || ''
                 })
             });

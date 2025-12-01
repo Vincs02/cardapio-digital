@@ -63,7 +63,7 @@ const supabaseService = {
             .from('produtos')
             .select('*')
             .order('id', { ascending: true });
-        
+
         if (error) {
             console.error('Erro ao listar produtos:', error);
             return [];
@@ -83,7 +83,7 @@ const supabaseService = {
             .select('*')
             .eq('id', id)
             .single();
-        
+
         if (error) {
             console.error('Erro ao buscar produto:', error);
             return null;
@@ -103,7 +103,7 @@ const supabaseService = {
             .select('*')
             .eq('categoria', categoria)
             .order('id', { ascending: true });
-        
+
         if (error) {
             console.error('Erro ao filtrar produtos:', error);
             return [];
@@ -123,7 +123,7 @@ const supabaseService = {
             .select('*')
             .or(`nome.ilike.%${termo}%,descricao.ilike.%${termo}%,categoria.ilike.%${termo}%`)
             .order('id', { ascending: true });
-        
+
         if (error) {
             console.error('Erro na busca:', error);
             return [];
@@ -143,7 +143,7 @@ const supabaseService = {
             .select('*')
             .eq('favorito', true)
             .order('id', { ascending: true });
-        
+
         if (error) {
             console.error('Erro ao listar favoritos:', error);
             return [];
@@ -166,7 +166,7 @@ const supabaseService = {
             .insert([produto])
             .select()
             .single();
-        
+
         if (error) {
             console.error('Erro ao criar produto:', error);
             return null;
@@ -190,7 +190,7 @@ const supabaseService = {
             .eq('id', id)
             .select()
             .single();
-        
+
         if (error) {
             console.error('Erro ao atualizar produto:', error);
             return null;
@@ -210,7 +210,7 @@ const supabaseService = {
             .from('produtos')
             .delete()
             .eq('id', id);
-        
+
         if (error) {
             console.error('Erro ao deletar produto:', error);
             return false;
@@ -235,7 +235,7 @@ const supabaseService = {
             .from('produtos')
             .update({ favorito: novoFavorito })
             .eq('id', id);
-        
+
         if (error) {
             console.error('Erro ao alternar favorito:', error);
             return false;
@@ -318,7 +318,7 @@ const supabaseService = {
             }])
             .select()
             .single();
-        
+
         if (error) {
             console.error('Erro ao criar reserva:', error);
             return null;
@@ -338,7 +338,7 @@ const supabaseService = {
             .select('*')
             .order('data', { ascending: false })
             .order('horario', { ascending: false });
-        
+
         if (error) {
             console.error('Erro ao listar reservas:', error);
             return [];
@@ -358,7 +358,7 @@ const supabaseService = {
             .from('reservas')
             .delete()
             .eq('id', id);
-        
+
         if (error) {
             console.error('Erro ao deletar reserva:', error);
             return false;
@@ -369,8 +369,20 @@ const supabaseService = {
 
 // Inicializar quando o script carregar
 if (typeof window !== 'undefined') {
-    window.addEventListener('DOMContentLoaded', () => {
+    // Tentar inicializar imediatamente se a config já existir
+    if (window.SUPABASE_CONFIG) {
         initSupabase();
-    });
+    } else {
+        // Caso contrário, aguardar o evento DOMContentLoaded ou load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Pequeno delay para garantir que o script inline do index.html tenha rodado
+            setTimeout(initSupabase, 50);
+        });
+
+        // Fallback extra caso DOMContentLoaded já tenha passado
+        window.addEventListener('load', () => {
+            if (!supabaseClient) initSupabase();
+        });
+    }
 }
 

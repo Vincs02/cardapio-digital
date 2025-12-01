@@ -90,7 +90,7 @@ let products = [
         description: "Pão italiano tostado com tomate, manjericão e azeite",
         price: 22.90,
         category: "entradas",
-        image: "https://images.unsplash.com/photo-1572441713132-51c75654db73?auto=format&fit=crop&w=800&q=80",
+        image: "uploads/images/bruschetta.jpg",
         favorite: false
     },
     {
@@ -99,7 +99,7 @@ let products = [
         description: "Fatias finas de carne crua com rúcula, parmesão e azeite",
         price: 35.90,
         category: "entradas",
-        image: "https://images.unsplash.com/photo-1519623286303-27a177460f95?auto=format&fit=crop&w=800&q=80",
+        image: "uploads/images/carpaccio.jpg",
         favorite: false
     },
     {
@@ -162,7 +162,7 @@ let products = [
         description: "Água mineral com gás, 500ml",
         price: 5.50,
         category: "bebidas",
-        image: "https://images.unsplash.com/photo-1548839140-5a6d0e9e0f1c?w=400&h=300&fit=crop",
+        image: "uploads/images/agua-gas.jpg",
         favorite: false
     },
     {
@@ -180,7 +180,7 @@ let products = [
         description: "Cerveja artesanal gelada, 500ml",
         price: 12.90,
         category: "bebidas",
-        image: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop",
+        image: "uploads/images/cerveja.jpg",
         favorite: false
     },
     {
@@ -207,7 +207,7 @@ let products = [
         description: "Seleção de queijos artesanais com mel e nozes",
         price: 42.90,
         category: "entradas",
-        image: "https://images.unsplash.com/photo-1572441713132-51c75654db73?w=400&h=300&fit=crop",
+        image: "uploads/images/tabua-queijos.jpg",
         favorite: false
     },
     {

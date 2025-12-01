@@ -1175,8 +1175,21 @@ async function criarReservaAPI(reserva) {
             return null;
         }
     } catch (error) {
-        console.error('Erro ao criar reserva:', error);
-        return null;
+        console.warn('Erro ao criar reserva na API, salvando localmente:', error);
+        // Fallback: Salvar localmente
+        const novaReserva = {
+            id: nextReservaId++,
+            nome: reserva.nome,
+            telefone: reserva.telefone,
+            data: reserva.data,
+            hora: reserva.hora,
+            pessoas: reserva.pessoas,
+            obs: reserva.obs || ''
+        };
+        reservas.push(novaReserva);
+        saveReservasToLocalStorage();
+        saveReservaIdToLocalStorage();
+        return novaReserva;
     }
 }
 

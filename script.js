@@ -479,29 +479,78 @@ function showReservaConfirmation(reserva) {
     const confirmationDiv = document.createElement('div');
     confirmationDiv.style.cssText = `
         position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(5px);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    `;
+
+    confirmationDiv.innerHTML = `
+        <div style="
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            border: 2px solid #C5A059;
+            padding: 3rem;
+            border-radius: 0;
+            box-shadow: 0 20px 60px rgba(197, 160, 89, 0.3);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        ">
+            <div style="font-size: 4rem; color: #C5A059; margin-bottom: 1rem;">✓</div>
+            <h2 style="color: #C5A059; font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px;">Reserva Confirmada!</h2>
+            <div style="background: rgba(197, 160, 89, 0.1); padding: 1.5rem; border: 1px solid rgba(197, 160, 89, 0.3); margin-bottom: 1.5rem;">
+                <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Nome:</strong> ${reserva.nome}</p>
+                <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Telefone:</strong> ${reserva.telefone}</p>
+                <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Data/Hora:</strong> ${reserva.data_hora}</p>
+                <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Pessoas:</strong> ${reserva.numero_pessoas}</p>
+            </div>
+            <p style="color: #cccccc; font-size: 0.95rem; margin-top: 1.5rem;">Entraremos em contato em breve para confirmar!</p>
+        </div>
+    `;
+
+    // Adicionar animação
+    if (!document.querySelector('#confirmationAnimation')) {
+        const style = document.createElement('style');
+        style.id = 'confirmationAnimation';
+        style.textContent = `
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: scale(0.9);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
                 }
                 to {
                     opacity: 0;
                 }
             }
         `;
-    document.head.appendChild(style);
-}
+        document.head.appendChild(style);
+    }
 
-// Adicionar ao body
-document.body.appendChild(confirmationDiv);
+    // Adicionar ao body
+    document.body.appendChild(confirmationDiv);
 
-// Remover após 4 segundos
-setTimeout(() => {
-    confirmationDiv.style.animation = 'fadeOut 0.4s ease-out forwards';
+    // Remover após 4 segundos
     setTimeout(() => {
-        confirmationDiv.remove();
-    }, 400);
-}, 4000);
+        confirmationDiv.style.animation = 'fadeOut 0.4s ease-out forwards';
+        setTimeout(() => {
+            confirmationDiv.remove();
+        }, 400);
+    }, 4000);
 }
 
 // Função para abrir modal de login admin

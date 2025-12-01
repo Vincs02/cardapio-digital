@@ -21,12 +21,18 @@ export default function handler(req, res) {
         // Vercel serverless functions não têm acesso a variáveis VITE_*
         const SENHA_CORRETA = process.env.ADMIN_PASSWORD || '0202';
 
-        if (senha === SENHA_CORRETA) {
+        // Trim para evitar problemas com espaços
+        const senhaLimpa = senha?.trim();
+        const senhaCorretaLimpa = SENHA_CORRETA.trim();
+
+        if (senhaLimpa === senhaCorretaLimpa) {
             return res.status(200).json({
                 autenticado: true,
                 mensagem: 'Autenticação bem-sucedida'
             });
         } else {
+            // Log para debug (remover em produção se necessário)
+            console.log('Tentativa de login falhou. Senha recebida:', senhaLimpa?.substring(0, 2) + '***');
             return res.status(401).json({
                 autenticado: false,
                 mensagem: 'Senha incorreta'

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GTI - Cardápio Digital</title>
+    <title>Sabor & Arte - Cardápio Digital</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -13,12 +13,13 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <div class="logo-icon">🍽️</div>
-                <span class="logo-text">GTI</span>
+                <div class="logo-icon">👨‍🍳</div>
+                <span class="logo-text">Sabor & Arte</span>
             </div>
             <div class="nav-buttons">
                 <button class="nav-btn active">Cardápio</button>
                 <button class="nav-btn">Reservar Mesa</button>
+                <button class="nav-btn nav-btn-admin" id="adminTriggerNav" title="Área Administrativa">⚙️</button>
             </div>
         </div>
     </nav>
@@ -61,11 +62,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Admin Button (discreto no final) -->
-    <div class="admin-trigger" id="adminTrigger" title="Área Administrativa">
-        <span>⚙</span>
-    </div>
 
     <!-- Modal de Reserva -->
     <div class="modal" id="reservaModal">
@@ -197,15 +193,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer with Admin Trigger -->
-    <footer style="text-align: center; padding: 2rem; margin-top: 2rem; border-top: 1px solid #333;">
-        <div class="admin-trigger"
-            style="position: static; display: inline-flex; width: auto; height: auto; padding: 10px 20px; background: transparent; border: 1px solid #333; opacity: 1;">
-            <span style="margin-right: 8px;">⚙️</span> Painel Admin
-        </div>
-        <p style="margin-top: 1rem; color: #666; font-size: 0.8rem;">&copy; 2025 GTI. Todos os direitos reservados.</p>
-    </footer>
 
     <!-- Supabase Client (via CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

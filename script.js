@@ -1363,7 +1363,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Admin trigger button - abre modal de login
-    document.getElementById('adminTrigger').addEventListener('click', openAdminLoginModal);
+    const adminTriggerNav = document.getElementById('adminTriggerNav');
+    if (adminTriggerNav) {
+        adminTriggerNav.addEventListener('click', openAdminLoginModal);
+    }
 
     // Busca no admin
     const adminSearchInput = document.getElementById('adminSearchInput');

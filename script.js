@@ -98,6 +98,28 @@ let products = [
         name: "Carpaccio",
         description: "Fatias finas de carne crua com rúcula, parmesão e azeite",
         price: 35.90,
+        category: "entradas",
+        image: "https://images.unsplash.com/photo-1519623286303-27a177460f95?auto=format&fit=crop&w=800&q=80",
+        favorite: false
+    },
+    {
+        id: 12,
+        name: "Risotto de Camarão",
+        description: "Arroz arbóreo cremoso com camarões frescos e ervas",
+        price: 68.90,
+        category: "pratos",
+        image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
+        favorite: false
+    },
+    {
+        id: 13,
+        name: "Filé Mignon",
+        description: "Filé mignon grelhado com batatas rústicas e molho especial",
+        price: 79.90,
+        category: "pratos",
+        image: "https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=800&q=80",
+        favorite: false
+    },
     {
         id: 14,
         name: "Salmão Grelhado",

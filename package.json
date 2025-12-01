@@ -2,12 +2,9 @@
   "name": "cardapio-digital",
   "version": "1.0.0",
   "description": "Sistema de Cardápio Digital",
-  "scripts": {
-    "build": "echo 'Build completo'"
-  },
+  "scripts": {},
   "dependencies": {
     "@supabase/supabase-js": "^2.38.4"
   },
   "devDependencies": {}
 }
-

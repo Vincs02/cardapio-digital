@@ -53,8 +53,18 @@ const supabaseService = {
     async listarProdutos() {
         if (!supabaseClient) {
             // Fallback para API local
-            const response = await fetch(`${API_BASE_URL}/produtos`);
-            if (response.ok) return await response.json();
+            // Fallback para API local com timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/produtos`, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                if (response.ok) return await response.json();
+            } catch (e) {
+                clearTimeout(timeoutId);
+                console.warn('API local indisponível, usando array vazio');
+            }
             return [];
         }
 
@@ -327,8 +337,18 @@ const supabaseService = {
 
     async listarReservas() {
         if (!supabaseClient) {
-            const response = await fetch(`${API_BASE_URL}/reservas`);
-            if (response.ok) return await response.json();
+            // Fallback para API local com timeout
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/reservas`, { signal: controller.signal });
+                clearTimeout(timeoutId);
+                if (response.ok) return await response.json();
+            } catch (e) {
+                clearTimeout(timeoutId);
+                console.warn('API local indisponível para reservas');
+            }
             return [];
         }
 

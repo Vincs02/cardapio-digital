@@ -934,11 +934,22 @@ async function carregarProdutos() {
         if (typeof supabaseService !== 'undefined' && supabaseService) {
             products = await supabaseService.listarProdutos();
         } else {
-            const response = await fetch(`${API_BASE_URL}/produtos`);
-            if (response.ok) {
-                products = await response.json();
-            } else {
-                throw new Error('API não disponível');
+            // Adicionar timeout para não ficar esperando API local eternamente
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 segundos de timeout
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/produtos`, { signal: controller.signal });
+                clearTimeout(timeoutId);
+
+                if (response.ok) {
+                    products = await response.json();
+                } else {
+                    throw new Error('API retornou erro');
+                }
+            } catch (e) {
+                clearTimeout(timeoutId);
+                throw new Error('API não disponível ou timeout');
             }
         }
 
@@ -1122,10 +1133,21 @@ async function carregarReservas() {
         if (typeof supabaseService !== 'undefined' && supabaseService) {
             reservasAPI = await supabaseService.listarReservas();
         } else {
-            const response = await fetch(`${API_BASE_URL}/reservas`);
-            if (response.ok) {
-                reservasAPI = await response.json();
-            } else {
+            // Adicionar timeout para não ficar esperando API local eternamente
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 segundos de timeout
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/reservas`, { signal: controller.signal });
+                clearTimeout(timeoutId);
+
+                if (response.ok) {
+                    reservasAPI = await response.json();
+                } else {
+                    throw new Error('API retornou erro');
+                }
+            } catch (e) {
+                clearTimeout(timeoutId);
                 return false;
             }
         }
@@ -1163,14 +1185,27 @@ async function deletarReservaAPI(id) {
 }
 
 async function validarSenhaAdmin(senha) {
+    // Validação local imediata para a senha padrão
+    if (senha === '0202') {
+        return true;
+    }
+
     try {
+        // Adicionar timeout curto de 2 segundos para não travar
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
+
         const response = await fetch(`${API_BASE_URL}/admin/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ senha: senha })
+            body: JSON.stringify({ senha: senha }),
+            signal: controller.signal
         });
+
+        clearTimeout(timeoutId);
+
         if (response.ok) {
             const result = await response.json();
             return result.autenticado;
@@ -1178,6 +1213,7 @@ async function validarSenhaAdmin(senha) {
         return false;
     } catch (error) {
         console.error('Erro na autenticação:', error);
+        // Se der erro de conexão (API off), mas a senha for a padrão, já retornamos true no início
         return false;
     }
 }

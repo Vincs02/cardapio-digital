@@ -7,18 +7,17 @@ let supabaseClient = null;
 // Função para obter variáveis de ambiente
 function getEnvVar(name) {
     // Tentar diferentes formas de obter variáveis
+
     // Para Vercel (produção)
     if (typeof window !== 'undefined' && window.__ENV__) {
         return window.__ENV__[name];
     }
-    // Para Vite (desenvolvimento)
-    if (typeof import.meta !== 'undefined' && import.meta.env) {
-        return import.meta.env[name];
-    }
+
     // Para Node.js
     if (typeof process !== 'undefined' && process.env) {
         return process.env[name];
     }
+
     // Tentar buscar de um objeto global
     if (typeof window !== 'undefined' && window.SUPABASE_CONFIG) {
         return window.SUPABASE_CONFIG[name];

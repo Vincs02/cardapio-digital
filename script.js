@@ -842,7 +842,7 @@ async function renderReservas() {
         const dataFormatada = new Date(reserva.data + 'T00:00:00').toLocaleDateString('pt-BR');
         item.innerHTML = `
             <div class="admin-item-info">
-                <div class="admin-item-name">${reserva.nome}</div>
+                <div class="admin-item-name">GTI - ${reserva.nome}</div>
                 <div class="admin-item-details">
                     📞 ${reserva.telefone} • 👥 ${reserva.pessoas} pessoa${reserva.pessoas > 1 ? 's' : ''}<br>
                     📅 ${dataFormatada} às ${reserva.hora}

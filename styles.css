@@ -417,128 +417,104 @@ border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .filter-btn:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-}
-
-.filter-btn.active {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.25);
-    color: #ffffff;
-}
-
-/* Products Grid */
-.products {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.products-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-}
-
-.product-card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 2px;
-    padding: 0;
-    transition: all 0.25s ease;
-    cursor: pointer;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
-.product-card:hover {
-    border-color: rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.product-image {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 0;
-    margin: 0;
-    background: rgba(255, 255, 255, 0.02);
-    display: block;
-}
-
-.product-card-content {
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-
-.product-name {
-    font-size: 1.15rem;
-    font-weight: 400;
-    margin-bottom: 0.5rem;
-    color: #ffffff;
-    letter-spacing: 0.2px;
-}
-
-.product-description {
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.55);
-    margin-bottom: 1rem;
-    line-height: 1.6;
-    min-height: 50px;
-    flex: 1;
-}
-
-.product-price {
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: #ffffff;
-    letter-spacing: -0.5px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 0.75rem 1rem;
+    .product-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 2px;
+        padding: 0;
+        transition: all 0.25s ease;
+        cursor: pointer;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        flex-direction: column;
     }
 
-    .logo-text {
-        font-size: 1.25rem;
+    .product-card:hover {
+        border-color: rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.05);
     }
 
-    .nav-btn {
-        padding: 0.5rem 1rem;
+    .product-image {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 0;
+        margin: 0;
+        background: rgba(255, 255, 255, 0.02);
+        display: block;
+    }
+
+    .product-card-content {
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .product-name {
+        font-size: 1.15rem;
+        font-weight: 400;
+        margin-bottom: 0.5rem;
+        color: #ffffff;
+        letter-spacing: 0.2px;
+    }
+
+    .product-description {
         font-size: 0.875rem;
+        color: rgba(255, 255, 255, 0.55);
+        margin-bottom: 1rem;
+        line-height: 1.6;
+        min-height: 50px;
+        flex: 1;
     }
 
-    .hero {
-        padding: 2.5rem 1.5rem 2rem;
+    .product-price {
+        font-size: 1.5rem;
+        font-weight: 500;
+        color: #ffffff;
+        letter-spacing: -0.5px;
     }
 
-    .hero-title {
-        font-size: 2rem;
-        margin-bottom: 0.75rem;
+    /* Responsive */
+    @media (max-width: 768px) {
+        .navbar {
+            padding: 0.75rem 1rem;
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+        }
+
+        .nav-btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .hero {
+            padding: 2.5rem 1.5rem 2rem;
+        }
+
+        .hero-title {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-subtitle {
+            font-size: 0.95rem;
+        }
+
+        padding: 0.875rem;
+        font-size: 16px;
+        /* Prevents zoom on iOS */
+        min-height: 44px;
     }
 
-    .hero-subtitle {
-        font-size: 0.95rem;
+    .btn-submit {
+        padding: 1rem;
+        font-size: 1rem;
+        min-height: 48px;
     }
-
-    padding: 0.875rem;
-    font-size: 16px;
-    /* Prevents zoom on iOS */
-    min-height: 44px;
-}
-
-.btn-submit {
-    padding: 1rem;
-    font-size: 1rem;
-    min-height: 48px;
-}
 }
 
 @media (max-width: 480px) {

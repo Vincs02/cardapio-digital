@@ -890,6 +890,8 @@ function switchAdminTab(tab) {
     // Se for a aba de reservas, atualizar a lista
     if (tab === 'reservas') {
         renderReservas();
+    } else if (tab === 'favorites') {
+        renderFavorites();
     }
 }
 

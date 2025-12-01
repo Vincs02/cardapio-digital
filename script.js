@@ -1061,425 +1061,450 @@ async function atualizarProduto(id, produto) {
         } else {
             const response = await fetch(`${API_BASE_URL}/produtos/${id}`, {
                 method: 'PUT',
-                return await supabaseService.deletarProduto(id);
-            } else {
-                const response = await fetch(`${API_BASE_URL}/produtos/${id}`, {
-                    method: 'DELETE'
-                });
-                return response.ok;
-            }
-    } catch (error) {
-            console.error('Erro ao deletar produto:', error);
-            return false;
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(produto)
+            });
+            return response.ok;
         }
+    } catch (error) {
+        console.warn('Erro ao atualizar na API, salvando localmente:', error);
+        // Fallback: Atualizar localmente
+        const index = products.findIndex(p => p.id === id);
+        if (index !== -1) {
+            products[index] = {
+                ...products[index],
+                ...produto,
+                favorito: produto.favorito !== undefined ? produto.favorito : products[index].favorito
+            };
+            saveToLocalStorage();
+            return true;
+        }
+        return false;
     }
+}
+
+async function deletarProdutoAPI(id) {
+    try {
+        if (typeof supabaseService !== 'undefined' && supabaseService) {
+            return await supabaseService.deletarProduto(id);
+        } else {
+            const response = await fetch(`${API_BASE_URL}/produtos/${id}`, {
+                method: 'DELETE'
+            });
+            return response.ok;
+        }
+    } catch (error) {
+        console.error('Erro ao deletar produto:', error);
+        return false;
+    }
+}
 
 async function toggleFavoritoAPI(id) {
-        try {
-            if (typeof supabaseService !== 'undefined' && supabaseService) {
-                return await supabaseService.toggleFavorito(id);
-            } else {
-                const response = await fetch(`${API_BASE_URL}/produtos/${id}/favorito`, {
-                    method: 'POST'
-                });
-                return response.ok;
-            }
-        } catch (error) {
-            console.error('Erro ao alternar favorito:', error);
-            return false;
-        }
-    }
-
-    async function buscarProdutos(termo) {
-        try {
-            if (typeof supabaseService !== 'undefined' && supabaseService) {
-                return await supabaseService.buscarProdutos(termo);
-            } else {
-                // Adicionar timeout para API local
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 2000);
-
-                const response = await fetch(`${API_BASE_URL}/produtos/buscar?termo=${encodeURIComponent(termo)}`, {
-                    signal: controller.signal
-                });
-                clearTimeout(timeoutId);
-
-                if (response.ok) {
-                    return await response.json();
-                }
-                throw new Error('API retornou erro');
-            }
-        } catch (error) {
-            console.warn('Erro na busca API, usando filtro local:', error);
-            // Fallback: filtrar localmente
-            if (!termo || termo.trim() === '') return products;
-
-            const termoLower = termo.toLowerCase();
-            return products.filter(p => {
-                const nome = (p.nome || p.name || '').toLowerCase();
-                const desc = (p.descricao || p.description || '').toLowerCase();
-                const cat = (p.categoria ? (p.categoria.descricao || p.categoria) : (p.category || '')).toLowerCase();
-
-                return nome.includes(termoLower) ||
-                    desc.includes(termoLower) ||
-                    cat.includes(termoLower);
+    try {
+        if (typeof supabaseService !== 'undefined' && supabaseService) {
+            return await supabaseService.toggleFavorito(id);
+        } else {
+            const response = await fetch(`${API_BASE_URL}/produtos/${id}/favorito`, {
+                method: 'POST'
             });
+            return response.ok;
         }
+    } catch (error) {
+        console.error('Erro ao alternar favorito:', error);
+        return false;
     }
+}
 
-    async function criarReservaAPI(reserva) {
-        try {
-            if (typeof supabaseService !== 'undefined' && supabaseService) {
-                return await supabaseService.criarReserva(reserva);
-            } else {
-                const response = await fetch(`${API_BASE_URL}/reservas`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        nome: reserva.nome,
-                        telefone: reserva.telefone,
-                        data: reserva.data,
-                        horario: reserva.hora,
-                        numero_pessoas: parseInt(reserva.pessoas) || 1,
-                        observacoes: reserva.obs || ''
-                    })
-                });
-                if (response.ok) {
-                    return await response.json();
-                }
-                return null;
-            }
-        } catch (error) {
-            console.error('Erro ao criar reserva:', error);
-            return null;
-        }
-    }
-
-    async function carregarReservas() {
-        try {
-            let reservasAPI;
-            if (typeof supabaseService !== 'undefined' && supabaseService) {
-                reservasAPI = await supabaseService.listarReservas();
-            } else {
-                // Adicionar timeout para não ficar esperando API local eternamente
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 segundos de timeout
-
-                try {
-                    const response = await fetch(`${API_BASE_URL}/reservas`, { signal: controller.signal });
-                    clearTimeout(timeoutId);
-
-                    if (response.ok) {
-                        reservasAPI = await response.json();
-                    } else {
-                        throw new Error('API retornou erro');
-                    }
-                } catch (e) {
-                    clearTimeout(timeoutId);
-                    return false;
-                }
-            }
-
-            reservas = reservasAPI.map(r => ({
-                id: r.id,
-                nome: r.nome,
-                telefone: r.telefone,
-                data: r.data,
-                hora: r.horario || r.hora,
-                pessoas: (r.numero_pessoas || r.numeroPessoas || r.pessoas).toString(),
-                obs: r.observacoes || r.obs || ''
-            }));
-            return true;
-        } catch (error) {
-            console.error('Erro ao carregar reservas:', error);
-            return false;
-        }
-    }
-
-    async function deletarReservaAPI(id) {
-        try {
-            if (typeof supabaseService !== 'undefined' && supabaseService) {
-                return await supabaseService.deletarReserva(id);
-            } else {
-                const response = await fetch(`${API_BASE_URL}/reservas/${id}`, {
-                    method: 'DELETE'
-                });
-                return response.ok;
-            }
-        } catch (error) {
-            console.error('Erro ao deletar reserva:', error);
-            return false;
-        }
-    }
-
-    async function validarSenhaAdmin(senha) {
-        // Validação local imediata para a senha padrão
-        if (senha === '0202') {
-            return true;
-        }
-
-        try {
-            // Adicionar timeout curto de 2 segundos para não travar
+async function buscarProdutos(termo) {
+    try {
+        if (typeof supabaseService !== 'undefined' && supabaseService) {
+            return await supabaseService.buscarProdutos(termo);
+        } else {
+            // Adicionar timeout para API local
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 2000);
 
-            const response = await fetch(`${API_BASE_URL}/admin/login`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ senha: senha }),
+            const response = await fetch(`${API_BASE_URL}/produtos/buscar?termo=${encodeURIComponent(termo)}`, {
                 signal: controller.signal
             });
-
             clearTimeout(timeoutId);
 
             if (response.ok) {
-                const result = await response.json();
-                return result.autenticado;
+                return await response.json();
             }
-            return false;
-        } catch (error) {
-            console.error('Erro na autenticação:', error);
-            // Se der erro de conexão (API off), mas a senha for a padrão, já retornamos true no início
-            return false;
+            throw new Error('API retornou erro');
         }
+    } catch (error) {
+        console.warn('Erro na busca API, usando filtro local:', error);
+        // Fallback: filtrar localmente
+        if (!termo || termo.trim() === '') return products;
+
+        const termoLower = termo.toLowerCase();
+        return products.filter(p => {
+            const nome = (p.nome || p.name || '').toLowerCase();
+            const desc = (p.descricao || p.description || '').toLowerCase();
+            const cat = (p.categoria ? (p.categoria.descricao || p.categoria) : (p.category || '')).toLowerCase();
+
+            return nome.includes(termoLower) ||
+                desc.includes(termoLower) ||
+                cat.includes(termoLower);
+        });
+    }
+}
+
+async function criarReservaAPI(reserva) {
+    try {
+        if (typeof supabaseService !== 'undefined' && supabaseService) {
+            return await supabaseService.criarReserva(reserva);
+        } else {
+            const response = await fetch(`${API_BASE_URL}/reservas`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    nome: reserva.nome,
+                    telefone: reserva.telefone,
+                    data: reserva.data,
+                    horario: reserva.hora,
+                    numero_pessoas: parseInt(reserva.pessoas) || 1,
+                    observacoes: reserva.obs || ''
+                })
+            });
+            if (response.ok) {
+                return await response.json();
+            }
+            return null;
+        }
+    } catch (error) {
+        console.error('Erro ao criar reserva:', error);
+        return null;
+    }
+}
+
+async function carregarReservas() {
+    try {
+        let reservasAPI;
+        if (typeof supabaseService !== 'undefined' && supabaseService) {
+            reservasAPI = await supabaseService.listarReservas();
+        } else {
+            // Adicionar timeout para não ficar esperando API local eternamente
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 segundos de timeout
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/reservas`, { signal: controller.signal });
+                clearTimeout(timeoutId);
+
+                if (response.ok) {
+                    reservasAPI = await response.json();
+                } else {
+                    throw new Error('API retornou erro');
+                }
+            } catch (e) {
+                clearTimeout(timeoutId);
+                return false;
+            }
+        }
+
+        reservas = reservasAPI.map(r => ({
+            id: r.id,
+            nome: r.nome,
+            telefone: r.telefone,
+            data: r.data,
+            hora: r.horario || r.hora,
+            pessoas: (r.numero_pessoas || r.numeroPessoas || r.pessoas).toString(),
+            obs: r.observacoes || r.obs || ''
+        }));
+        return true;
+    } catch (error) {
+        console.error('Erro ao carregar reservas:', error);
+        return false;
+    }
+}
+
+async function deletarReservaAPI(id) {
+    try {
+        if (typeof supabaseService !== 'undefined' && supabaseService) {
+            return await supabaseService.deletarReserva(id);
+        } else {
+            const response = await fetch(`${API_BASE_URL}/reservas/${id}`, {
+                method: 'DELETE'
+            });
+            return response.ok;
+        }
+    } catch (error) {
+        console.error('Erro ao deletar reserva:', error);
+        return false;
+    }
+}
+
+async function validarSenhaAdmin(senha) {
+    // Validação local imediata para a senha padrão
+    if (senha === '0202') {
+        return true;
     }
 
-    // Event listeners
-    document.addEventListener('DOMContentLoaded', () => {
-        // Carregar produtos da API
-        carregarProdutos();
+    try {
+        // Adicionar timeout curto de 2 segundos para não travar
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2000);
 
-        // Carregar reservas da API
-        carregarReservas();
-
-        // Adicionar event listeners aos botões de filtro
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const category = btn.dataset.category;
-                currentFilter = category;
-                updateActiveFilter(category);
-                renderProducts(category);
-            });
+        const response = await fetch(`${API_BASE_URL}/admin/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ senha: senha }),
+            signal: controller.signal
         });
 
-        // Event listener para botão "Reservar Mesa" (segundo botão)
-        const navButtons = document.querySelectorAll('.nav-btn');
-        const reservarBtn = navButtons[1]; // Segundo botão é "Reservar Mesa"
-        if (reservarBtn) {
-            reservarBtn.addEventListener('click', openReservaModal);
+        clearTimeout(timeoutId);
+
+        if (response.ok) {
+            const result = await response.json();
+            return result.autenticado;
         }
+        return false;
+    } catch (error) {
+        console.error('Erro na autenticação:', error);
+        // Se der erro de conexão (API off), mas a senha for a padrão, já retornamos true no início
+        return false;
+    }
+}
 
-        // Event listener para botão "Cardápio"
-        const cardapioBtn = document.querySelector('.nav-btn.active');
-        if (cardapioBtn) {
-            cardapioBtn.addEventListener('click', () => {
-                closeReservaModal();
-                closeAdminModal();
-            });
-        }
+// Event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Carregar produtos da API
+    carregarProdutos();
 
-        // Event listeners para modais
-        document.getElementById('closeReserva').addEventListener('click', closeReservaModal);
-        document.getElementById('closeAdmin').addEventListener('click', closeAdminModal);
-        document.getElementById('closeAdminLogin').addEventListener('click', closeAdminLoginModal);
+    // Carregar reservas da API
+    carregarReservas();
 
-        // Fechar modal ao clicar fora
-        document.getElementById('reservaModal').addEventListener('click', (e) => {
-            if (e.target.id === 'reservaModal') closeReservaModal();
+    // Adicionar event listeners aos botões de filtro
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const category = btn.dataset.category;
+            currentFilter = category;
+            updateActiveFilter(category);
+            renderProducts(category);
         });
-
-        document.getElementById('adminModal').addEventListener('click', (e) => {
-            if (e.target.id === 'adminModal') closeAdminModal();
-        });
-
-        document.getElementById('adminLoginModal').addEventListener('click', (e) => {
-            if (e.target.id === 'adminLoginModal') closeAdminLoginModal();
-        });
-
-        // Formulário de login admin
-        document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const senha = document.getElementById('adminPassword').value;
-
-            // Validar senha na API
-            const autenticado = await validarSenhaAdmin(senha);
-            if (autenticado) {
-                closeAdminLoginModal();
-                openAdminModal();
-            } else {
-                alert('Senha incorreta!');
-                document.getElementById('adminPassword').value = '';
-                document.getElementById('adminPassword').focus();
-            }
-        });
-        document.getElementById('createItemForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            if (editingProductId) {
-                await saveProductEdit(editingProductId);
-                return;
-            }
-
-            let imagemUrl = document.getElementById('itemImagem').value;
-
-            // Se houver arquivo selecionado, fazer upload
-            const fileInput = document.getElementById('itemImagemFile');
-            if (fileInput.files && fileInput.files.length > 0) {
-                try {
-                    imagemUrl = await uploadImagem(fileInput.files[0]);
-                } catch (error) {
-                    alert('Erro ao fazer upload da imagem: ' + error.message);
-                    return;
-                }
-            }
-
-            // Validar se tem imagem (URL ou arquivo)
-            if (!imagemUrl || imagemUrl.trim() === '') {
-                alert('Por favor, forneça uma imagem (URL ou arquivo)');
-                return;
-            }
-
-            const newProduct = {
-                nome: document.getElementById('itemNome').value,
-                descricao: document.getElementById('itemDescricao').value,
-                preco: parseFloat(document.getElementById('itemPreco').value),
-                categoria: document.getElementById('itemCategoria').value.toUpperCase(),
-                imagemUrl: imagemUrl,
-                favorito: document.getElementById('itemFavorito').checked
-            };
-
-            const sucesso = await salvarProduto(newProduct);
-            if (sucesso) {
-                await carregarProdutos();
-                renderAdminItems();
-                document.getElementById('createItemForm').reset();
-                document.getElementById('imagePreview').innerHTML = '';
-                const submitBtn = document.querySelector('#createItemForm .btn-submit');
-                submitBtn.textContent = 'Criar Item';
-                alert('Item criado com sucesso!');
-                switchAdminTab('list');
-            } else {
-                alert('Erro ao criar item. Tente novamente.');
-            }
-        });
-
-        // Event listener para preview de imagem ao selecionar arquivo
-        const fileInput = document.getElementById('itemImagemFile');
-        if (fileInput) {
-            fileInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    // Validar tipo de arquivo
-                    if (!file.type.startsWith('image/')) {
-                        alert('Por favor, selecione um arquivo de imagem');
-                        e.target.value = '';
-                        return;
-                    }
-
-                    // Validar tamanho (máximo 5MB)
-                    if (file.size > 5 * 1024 * 1024) {
-                        alert('A imagem deve ter no máximo 5MB');
-                        e.target.value = '';
-                        return;
-                    }
-
-                    // Mostrar preview
-                    const reader = new FileReader();
-                    reader.onload = (event) => {
-                        showImagePreview(event.target.result);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
-
-        // Event listener para preview ao colar URL
-        const urlInput = document.getElementById('itemImagem');
-        if (urlInput) {
-            urlInput.addEventListener('blur', (e) => {
-                const url = e.target.value.trim();
-                if (url && !urlInput.files) {
-                    showImagePreview(url);
-                }
-            });
-        }
-
-        // Admin tabs
-        document.querySelectorAll('.admin-tab').forEach(btn => {
-            btn.addEventListener('click', () => {
-                switchAdminTab(btn.dataset.tab);
-            });
-        });
-
-        // Admin trigger button - abre modal de login
-        const adminTriggerNav = document.getElementById('adminTriggerNav');
-        if (adminTriggerNav) {
-            adminTriggerNav.addEventListener('click', openAdminLoginModal);
-        }
-
-        // Busca no admin
-        const adminSearchInput = document.getElementById('adminSearchInput');
-        if (adminSearchInput) {
-            let searchTimeout;
-            adminSearchInput.addEventListener('input', (e) => {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    renderAdminItems(e.target.value);
-                }, 300); // Debounce de 300ms
-            });
-        }
-
-
-        // Carrossel de recomendações
-        const carouselPrev = document.getElementById('carouselPrev');
-        const carouselNext = document.getElementById('carouselNext');
-        if (carouselPrev) {
-            carouselPrev.addEventListener('click', () => moveCarousel('prev'));
-        }
-        if (carouselNext) {
-            carouselNext.addEventListener('click', () => moveCarousel('next'));
-        }
-
-        // Event listener para formulário de reserva
-        const reservaForm = document.getElementById('reservaForm');
-        if (reservaForm) {
-            reservaForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                const reserva = {
-                    nome: document.getElementById('reservaNome').value,
-                    telefone: document.getElementById('reservaTelefone').value,
-                    data: document.getElementById('reservaData').value,
-                    hora: document.getElementById('reservaHora').value,
-                    pessoas: parseInt(document.getElementById('reservaPessoas').value),
-                    obs: document.getElementById('reservaObs').value || ''
-                };
-
-                try {
-                    const sucesso = await criarReservaAPI(reserva);
-                    if (sucesso) {
-                        closeReservaModal();
-                        showReservaConfirmation(reserva);
-                    } else {
-                        alert('Erro ao criar reserva. Tente novamente.');
-                    }
-                } catch (error) {
-                    console.error('Erro ao criar reserva:', error);
-                    alert('Erro ao criar reserva. Tente novamente.');
-                }
-            });
-        }
-
     });
 
-    // Exportar funções globais
-    window.deleteReserva = deleteReserva;
-    window.moveCarousel = moveCarousel;
+    // Event listener para botão "Reservar Mesa" (segundo botão)
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const reservarBtn = navButtons[1]; // Segundo botão é "Reservar Mesa"
+    if (reservarBtn) {
+        reservarBtn.addEventListener('click', openReservaModal);
+    }
 
-    // Exportar funções globais
-    window.toggleFavorite = toggleFavorite;
-    window.editProduct = editProduct;
-    window.deleteProduct = deleteProduct;
+    // Event listener para botão "Cardápio"
+    const cardapioBtn = document.querySelector('.nav-btn.active');
+    if (cardapioBtn) {
+        cardapioBtn.addEventListener('click', () => {
+            closeReservaModal();
+            closeAdminModal();
+        });
+    }
+
+    // Event listeners para modais
+    document.getElementById('closeReserva').addEventListener('click', closeReservaModal);
+    document.getElementById('closeAdmin').addEventListener('click', closeAdminModal);
+    document.getElementById('closeAdminLogin').addEventListener('click', closeAdminLoginModal);
+
+    // Fechar modal ao clicar fora
+    document.getElementById('reservaModal').addEventListener('click', (e) => {
+        if (e.target.id === 'reservaModal') closeReservaModal();
+    });
+
+    document.getElementById('adminModal').addEventListener('click', (e) => {
+        if (e.target.id === 'adminModal') closeAdminModal();
+    });
+
+    document.getElementById('adminLoginModal').addEventListener('click', (e) => {
+        if (e.target.id === 'adminLoginModal') closeAdminLoginModal();
+    });
+
+    // Formulário de login admin
+    document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const senha = document.getElementById('adminPassword').value;
+
+        // Validar senha na API
+        const autenticado = await validarSenhaAdmin(senha);
+        if (autenticado) {
+            closeAdminLoginModal();
+            openAdminModal();
+        } else {
+            alert('Senha incorreta!');
+            document.getElementById('adminPassword').value = '';
+            document.getElementById('adminPassword').focus();
+        }
+    });
+    document.getElementById('createItemForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (editingProductId) {
+            await saveProductEdit(editingProductId);
+            return;
+        }
+
+        let imagemUrl = document.getElementById('itemImagem').value;
+
+        // Se houver arquivo selecionado, fazer upload
+        const fileInput = document.getElementById('itemImagemFile');
+        if (fileInput.files && fileInput.files.length > 0) {
+            try {
+                imagemUrl = await uploadImagem(fileInput.files[0]);
+            } catch (error) {
+                alert('Erro ao fazer upload da imagem: ' + error.message);
+                return;
+            }
+        }
+
+        // Validar se tem imagem (URL ou arquivo)
+        if (!imagemUrl || imagemUrl.trim() === '') {
+            alert('Por favor, forneça uma imagem (URL ou arquivo)');
+            return;
+        }
+
+        const newProduct = {
+            nome: document.getElementById('itemNome').value,
+            descricao: document.getElementById('itemDescricao').value,
+            preco: parseFloat(document.getElementById('itemPreco').value),
+            categoria: document.getElementById('itemCategoria').value.toUpperCase(),
+            imagemUrl: imagemUrl,
+            favorito: document.getElementById('itemFavorito').checked
+        };
+
+        const sucesso = await salvarProduto(newProduct);
+        if (sucesso) {
+            await carregarProdutos();
+            renderAdminItems();
+            document.getElementById('createItemForm').reset();
+            document.getElementById('imagePreview').innerHTML = '';
+            const submitBtn = document.querySelector('#createItemForm .btn-submit');
+            submitBtn.textContent = 'Criar Item';
+            alert('Item criado com sucesso!');
+            switchAdminTab('list');
+        } else {
+            alert('Erro ao criar item. Tente novamente.');
+        }
+    });
+
+    // Event listener para preview de imagem ao selecionar arquivo
+    const fileInput = document.getElementById('itemImagemFile');
+    if (fileInput) {
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                // Validar tipo de arquivo
+                if (!file.type.startsWith('image/')) {
+                    alert('Por favor, selecione um arquivo de imagem');
+                    e.target.value = '';
+                    return;
+                }
+
+                // Validar tamanho (máximo 5MB)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('A imagem deve ter no máximo 5MB');
+                    e.target.value = '';
+                    return;
+                }
+
+                // Mostrar preview
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    showImagePreview(event.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Event listener para preview ao colar URL
+    const urlInput = document.getElementById('itemImagem');
+    if (urlInput) {
+        urlInput.addEventListener('blur', (e) => {
+            const url = e.target.value.trim();
+            if (url && !urlInput.files) {
+                showImagePreview(url);
+            }
+        });
+    }
+
+    // Admin tabs
+    document.querySelectorAll('.admin-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+            switchAdminTab(btn.dataset.tab);
+        });
+    });
+
+    // Admin trigger button - abre modal de login
+    const adminTriggerNav = document.getElementById('adminTriggerNav');
+    if (adminTriggerNav) {
+        adminTriggerNav.addEventListener('click', openAdminLoginModal);
+    }
+
+    // Busca no admin
+    const adminSearchInput = document.getElementById('adminSearchInput');
+    if (adminSearchInput) {
+        let searchTimeout;
+        adminSearchInput.addEventListener('input', (e) => {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                renderAdminItems(e.target.value);
+            }, 300); // Debounce de 300ms
+        });
+    }
+
+
+    // Carrossel de recomendações
+    const carouselPrev = document.getElementById('carouselPrev');
+    const carouselNext = document.getElementById('carouselNext');
+    if (carouselPrev) {
+        carouselPrev.addEventListener('click', () => moveCarousel('prev'));
+    }
+    if (carouselNext) {
+        carouselNext.addEventListener('click', () => moveCarousel('next'));
+    }
+
+    // Event listener para formulário de reserva
+    const reservaForm = document.getElementById('reservaForm');
+    if (reservaForm) {
+        reservaForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const reserva = {
+                nome: document.getElementById('reservaNome').value,
+                telefone: document.getElementById('reservaTelefone').value,
+                data: document.getElementById('reservaData').value,
+                hora: document.getElementById('reservaHora').value,
+                pessoas: parseInt(document.getElementById('reservaPessoas').value),
+                obs: document.getElementById('reservaObs').value || ''
+            };
+
+            try {
+                const sucesso = await criarReservaAPI(reserva);
+                if (sucesso) {
+                    closeReservaModal();
+                    showReservaConfirmation(reserva);
+                } else {
+                    alert('Erro ao criar reserva. Tente novamente.');
+                }
+            } catch (error) {
+                console.error('Erro ao criar reserva:', error);
+                alert('Erro ao criar reserva. Tente novamente.');
+            }
+        });
+    }
+
+});
+
+// Exportar funções globais
+window.deleteReserva = deleteReserva;
+window.moveCarousel = moveCarousel;
+
+// Exportar funções globais
+window.toggleFavorite = toggleFavorite;
+window.editProduct = editProduct;
+window.deleteProduct = deleteProduct;

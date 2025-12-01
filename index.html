@@ -51,6 +51,20 @@
 
     <!-- Recomendações da Casa Carousel -->
     <section class="recommendations">
+        <div class="recommendations-container">
+            <h2 class="recommendations-title">🍽️ Recomendações da Casa</h2>
+            <div class="carousel-wrapper">
+                <button class="carousel-btn carousel-prev" id="carouselPrev">‹</button>
+                <div class="carousel-container" id="carouselContainer">
+                    <!-- Carousel items will be dynamically inserted here -->
+                </div>
+                <button class="carousel-btn carousel-next" id="carouselNext">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Reserva -->
+    <div class="modal" id="reservaModal">
         <div class="modal-content">
             <span class="close-modal" id="closeReserva">&times;</span>
             <h2>Reservar Mesa</h2>
@@ -82,132 +96,128 @@
                 <button type="submit" class="btn-submit">Confirmar Reserva</button>
             </form>
         </div>
-        </div>
+    </div>
 
-        <!-- Modal de Login Admin -->
-        <div class="modal" id="adminLoginModal">
-            <div class="modal-content">
-                <span class="close-modal" id="closeAdminLogin">&times;</span>
-                <h2>Acesso Administrativo</h2>
-                <form id="adminLoginForm">
-                    <div class="form-group">
-                        <label>Senha</label>
-                        <input type="password" id="adminPassword" required autofocus>
+    <!-- Modal de Login Admin -->
+    <div class="modal" id="adminLoginModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeAdminLogin">&times;</span>
+            <h2>Acesso Administrativo</h2>
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" id="adminPassword" required autofocus>
+                </div>
+                <button type="submit" class="btn-submit">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Admin -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content admin-content">
+            <span class="close-modal" id="closeAdmin">&times;</span>
+            <h2>Painel Administrativo</h2>
+
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="list">Itens</button>
+                <button class="admin-tab" data-tab="create">Novo Item</button>
+                <button class="admin-tab" data-tab="favorites">Favoritos</button>
+                <button class="admin-tab" data-tab="reservas">Reservas</button>
+            </div>
+
+            <div class="admin-panel" id="adminList">
+                <div class="admin-search-container">
+                    <div class="admin-search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" id="adminSearchInput" placeholder="Buscar itens..."
+                            class="admin-search-input">
                     </div>
-                    <button type="submit" class="btn-submit">Entrar</button>
+                </div>
+                <div class="admin-items-list" id="adminItemsList"></div>
+            </div>
+
+            <div class="admin-panel hidden" id="adminCreate">
+                <form id="createItemForm">
+                    <div class="form-group">
+                        <label>Nome</label>
+                        <input type="text" id="itemNome" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Descrição</label>
+                        <textarea id="itemDescricao" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Preço</label>
+                        <input type="number" id="itemPreco" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Categoria</label>
+                        <select id="itemCategoria" required>
+                            <option value="pizzas">Pizzas</option>
+                            <option value="bebidas">Bebidas</option>
+                            <option value="sobremesas">Sobremesas</option>
+                            <option value="entradas">Entradas</option>
+                            <option value="pratos">Pratos Principais</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Imagem</label>
+                        <div style="display: flex; gap: 1rem; flex-direction: column;">
+                            <input type="file" id="itemImagemFile" accept="image/*" style="display: none;">
+                            <button type="button" class="btn-upload"
+                                onclick="document.getElementById('itemImagemFile').click()">
+                                📷 Escolher Imagem do Computador
+                            </button>
+                            <div id="imagePreview" style="margin-top: 0.5rem;"></div>
+                            <div style="margin: 0.5rem 0; text-align: center; color: rgba(255,255,255,0.5);">ou</div>
+                            <input type="url" id="itemImagem" placeholder="URL da Imagem">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                            <input type="checkbox" id="itemFavorito" style="width: auto; cursor: pointer;">
+                            <span>⭐ Marcar como Recomendação da Casa (aparece no carrossel)</span>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-submit">Criar Item</button>
                 </form>
             </div>
-        </div>
 
-        <!-- Modal de Admin -->
-        <div class="modal" id="adminModal">
-            <div class="modal-content admin-content">
-                <span class="close-modal" id="closeAdmin">&times;</span>
-                <h2>Painel Administrativo</h2>
-
-                <div class="admin-tabs">
-                    <button class="admin-tab active" data-tab="list">Itens</button>
-                    <button class="admin-tab" data-tab="create">Novo Item</button>
-                    <button class="admin-tab" data-tab="favorites">Favoritos</button>
-                    <button class="admin-tab" data-tab="reservas">Reservas</button>
-                </div>
-
-                <div class="admin-panel" id="adminList">
-                    <div class="admin-search-container">
-                        <div class="admin-search-box">
-                            <span class="search-icon">🔍</span>
-                            <input type="text" id="adminSearchInput" placeholder="Buscar itens..."
-                                class="admin-search-input">
-                        </div>
-                    </div>
-                    <div class="admin-items-list" id="adminItemsList"></div>
-                </div>
-
-                <div class="admin-panel hidden" id="adminCreate">
-                    <form id="createItemForm">
-                        <div class="form-group">
-                            <label>Nome</label>
-                            <input type="text" id="itemNome" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Descrição</label>
-                            <textarea id="itemDescricao" rows="3" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Preço</label>
-                            <input type="number" id="itemPreco" step="0.01" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Categoria</label>
-                            <select id="itemCategoria" required>
-                                <option value="pizzas">Pizzas</option>
-                                <option value="bebidas">Bebidas</option>
-                                <option value="sobremesas">Sobremesas</option>
-                                <option value="entradas">Entradas</option>
-                                <option value="pratos">Pratos Principais</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Imagem</label>
-                            <div style="display: flex; gap: 1rem; flex-direction: column;">
-                                <input type="file" id="itemImagemFile" accept="image/*" style="display: none;">
-                                <button type="button" class="btn-upload"
-                                    onclick="document.getElementById('itemImagemFile').click()">
-                                    📷 Escolher Imagem do Computador
-                                </button>
-                                <div id="imagePreview" style="margin-top: 0.5rem;"></div>
-                                <div style="margin: 0.5rem 0; text-align: center; color: rgba(255,255,255,0.5);">ou
-                                </div>
-                                <input type="url" id="itemImagem" placeholder="URL da Imagem">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                                <input type="checkbox" id="itemFavorito" style="width: auto; cursor: pointer;">
-                                <span>⭐ Marcar como Recomendação da Casa (aparece no carrossel)</span>
-                            </label>
-                        </div>
-                        <button type="submit" class="btn-submit">Criar Item</button>
-                    </form>
-                </div>
-                <!-- Painel de Favoritos -->
-                <div class="admin-panel hidden" id="adminFavorites">
-                    <h3 style="color: #C5A059; margin-bottom: 1.5rem; font-size: 1.5rem;">⭐ Recomendações da Casa</h3>
-                    <div class="admin-items-list" id="favoritesList"></div>
-                </div>
-                <!-- Painel de Reservas -->
-                <div class="admin-panel hidden" id="adminReservas">
-                    <h3 style="color: #C5A059; margin-bottom: 1.5rem; font-size: 1.5rem;">📅 Reservas</h3>
-                    <div class="admin-items-list" id="reservasList"></div>
-                </div>
+            <div class="admin-panel hidden" id="adminFavorites">
+                <div class="admin-items-list" id="favoritesList"></div>
             </div>
-        </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-        <script src="supabase-client.js"></script>
-        <!-- Script principal -->
-        <script src="script.js?v=2"></script>
-        <!-- Inicializar Supabase com variáveis -->
-        <script>
-            // Configuração manual para desenvolvimento local
-            // REMOVA ESTE BLOCO EM PRODUÇÃO e use variáveis de ambiente
-            // Para produção na Vercel, configure as variáveis no dashboard
+            <div class="admin-panel hidden" id="adminReservas">
+                <div class="admin-items-list" id="reservasList"></div>
+            </div>
 
-            // Descomente e preencha para testar localmente:
-            window.SUPABASE_CONFIG = {
-                VITE_SUPABASE_URL: 'https://xcdpqxczwnfrkpkedxgw.supabase.co',
-                VITE_SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjZHBxeGN6d25mcmtwa2VkeGd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ1MzYxNjUsImV4cCI6MjA4MDExMjE2NX0.VH_bXfzd_2Y664bfIYwWvjqX-L-rAuUgDlY2rmPFFAs'
-            };
+            <!-- Configuração do Supabase -->
+            <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+            <script src="supabase-client.js"></script>
+            <!-- Script principal -->
+            <script src="script.js"></script>
+            <!-- Inicializar Supabase com variáveis -->
+            <script>
+                // Configuração manual para desenvolvimento local
+                // REMOVA ESTE BLOCO EM PRODUÇÃO e use variáveis de ambiente
+                // Para produção na Vercel, configure as variáveis no dashboard
 
-            // Inicializar Supabase quando tudo carregar
-            document.addEventListener('DOMContentLoaded', function () {
-                setTimeout(() => {
-                    if (typeof initSupabase === 'function') {
-                        initSupabase();
-                    }
-                }, 100);
-            });
-        </script>
+                // Descomente e preencha para testar localmente:
+                window.SUPABASE_CONFIG = {
+                    VITE_SUPABASE_URL: 'https://xcdpqxczwnfrkpkedxgw.supabase.co',
+                    VITE_SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjZHBxeGN6d25mcmtwa2VkeGd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ1MzYxNjUsImV4cCI6MjA4MDExMjE2NX0.VH_bXfzd_2Y664bfIYwWvjqX-L-rAuUgDlY2rmPFFAs'
+                };
+
+                // Inicializar Supabase quando tudo carregar
+                document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(() => {
+                        if (typeof initSupabase === 'function') {
+                            initSupabase();
+                        }
+                    }, 100);
+                });
+            </script>
 </body>
 
 </html>

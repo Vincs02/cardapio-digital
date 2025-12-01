@@ -483,76 +483,25 @@ function showReservaConfirmation(reserva) {
         left: 50%;
         transform: translate(-50%, -50%);
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 40px;
-        border-radius: 12px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        z-index: 10000;
-        text-align: center;
-        max-width: 400px;
-        animation: slideIn 0.4s ease-out;
-    `;
-
-    // Formatar data
-    const dataReserva = new Date(reserva.data + 'T' + reserva.hora);
-    const dataFormatada = dataReserva.toLocaleDateString('pt-BR', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-
-    confirmationDiv.innerHTML = `
-        <div style="font-size: 48px; margin-bottom: 15px;">✓</div>
-        <h2 style="margin: 0 0 20px 0; font-size: 24px;">Reserva Confirmada!</h2>
-        <div style="text-align: left; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 8px; margin: 20px 0;">
-            <p style="margin: 8px 0;"><strong>Nome:</strong> ${reserva.nome}</p>
-            <p style="margin: 8px 0;"><strong>Telefone:</strong> ${reserva.telefone}</p>
-            <p style="margin: 8px 0;"><strong>Data/Hora:</strong> ${dataFormatada}</p>
-            <p style="margin: 8px 0;"><strong>Pessoas:</strong> ${reserva.pessoas}</p>
-        </div>
-        <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">Entraremos em contato em breve para confirmar!</p>
-    `;
-
-    // Adicionar estilos de animação
-    if (!document.getElementById('reservaConfirmationStyles')) {
-        const style = document.createElement('style');
-        style.id = 'reservaConfirmationStyles';
-        style.textContent = `
-            @keyframes slideIn {
-                from {
-                    opacity: 0;
-                    transform: translate(-50%, -60%);
-                }
-                to {
-                    opacity: 1;
-                    transform: translate(-50%, -50%);
-                }
-            }
-            @keyframes fadeOut {
-                from {
-                    opacity: 1;
                 }
                 to {
                     opacity: 0;
                 }
             }
         `;
-        document.head.appendChild(style);
-    }
+    document.head.appendChild(style);
+}
 
-    // Adicionar ao body
-    document.body.appendChild(confirmationDiv);
+// Adicionar ao body
+document.body.appendChild(confirmationDiv);
 
-    // Remover após 4 segundos
+// Remover após 4 segundos
+setTimeout(() => {
+    confirmationDiv.style.animation = 'fadeOut 0.4s ease-out forwards';
     setTimeout(() => {
-        confirmationDiv.style.animation = 'fadeOut 0.4s ease-out forwards';
-        setTimeout(() => {
-            confirmationDiv.remove();
-        }, 400);
-    }, 4000);
+        confirmationDiv.remove();
+    }, 400);
+}, 4000);
 }
 
 // Função para abrir modal de login admin

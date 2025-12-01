@@ -1202,31 +1202,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('adminPassword').focus();
         }
     });
-
-    // Formulário de reserva
-    document.getElementById('reservaForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const reserva = {
-            nome: document.getElementById('reservaNome').value,
-            telefone: document.getElementById('reservaTelefone').value,
-            data: document.getElementById('reservaData').value,
-            hora: document.getElementById('reservaHora').value,
-            pessoas: document.getElementById('reservaPessoas').value,
-            obs: document.getElementById('reservaObs').value
-        };
-
-        // Salvar reserva na API
-        const reservaCriada = await criarReservaAPI(reserva);
-        if (reservaCriada) {
-            // Mostrar mensagem de confirmação elegante
-            showReservaConfirmation(reserva);
-            closeReservaModal();
-        } else {
-            alert('Erro ao criar reserva. Tente novamente.');
-        }
-    });
-
-    // Formulário de criar item
     document.getElementById('createItemForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 

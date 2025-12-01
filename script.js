@@ -54,7 +54,7 @@ let products = [
         description: "Água mineral natural, 500ml",
         price: 4.50,
         category: "bebidas",
-        image: "https://images.unsplash.com/photo-1564419320461-6870880221ad?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {

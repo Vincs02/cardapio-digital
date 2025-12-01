@@ -567,19 +567,7 @@ function closeAdminLoginModal() {
     document.getElementById('adminLoginForm').reset();
 }
 
-// Função para abrir modal de reserva
-function openReservaModal() {
-    const modal = document.getElementById('reservaModal');
-    modal.classList.add('active');
-    document.getElementById('reservaNome').focus();
-}
 
-// Função para fechar modal de reserva
-function closeReservaModal() {
-    const modal = document.getElementById('reservaModal');
-    modal.classList.remove('active');
-    document.getElementById('reservaForm').reset();
-}
 
 // Função para abrir modal de admin
 function openAdminModal() {
@@ -890,8 +878,6 @@ function switchAdminTab(tab) {
     // Se for a aba de reservas, atualizar a lista
     if (tab === 'reservas') {
         renderReservas();
-    } else if (tab === 'favorites') {
-        renderFavorites();
     }
 }
 

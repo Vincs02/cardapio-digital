@@ -267,17 +267,17 @@ function formatPrice(price) {
 // Função para normalizar categoria
 function normalizarCategoria(categoria) {
     if (!categoria) return '';
-    
+
     // Se for objeto com descricao
     if (typeof categoria === 'object' && categoria.descricao) {
         return categoria.descricao.toLowerCase();
     }
-    
+
     // Se for string
     if (typeof categoria === 'string') {
         return categoria.toLowerCase();
     }
-    
+
     return '';
 }
 
@@ -294,32 +294,32 @@ const categoriaMap = {
 // Função para renderizar produtos
 function renderProducts(filterCategory = 'todos') {
     const container = document.getElementById('productsContainer');
-    
+
     // Filtrar produtos
     let filteredProducts = products;
-    
+
     if (filterCategory !== 'todos') {
         const categoriasFiltro = categoriaMap[filterCategory] || [filterCategory.toLowerCase()];
-        
+
         filteredProducts = products.filter(product => {
             const categoriaProduto = normalizarCategoria(product.categoria || product.category);
-            
+
             // Verificar se a categoria do produto corresponde ao filtro
             return categoriasFiltro.some(cat => {
                 return categoriaProduto.includes(cat) || cat.includes(categoriaProduto);
             });
         });
     }
-    
+
     // Limpar container
     container.innerHTML = '';
-    
+
     // Renderizar produtos
     if (filteredProducts.length === 0) {
         container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: rgba(255,255,255,0.4); font-size: 1rem; padding: 3rem;">Nenhum produto encontrado nesta categoria.</p>';
         return;
     }
-    
+
     filteredProducts.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card';
@@ -327,12 +327,12 @@ function renderProducts(filterCategory = 'todos') {
         const descricao = product.descricao || product.description || '';
         const preco = product.preco ? parseFloat(product.preco) : (product.price ? parseFloat(product.price) : 0);
         let imagem = product.imagemUrl || product.image || '';
-        
+
         // Se não houver imagem, usar placeholder
         if (!imagem || imagem.trim() === '') {
             imagem = `https://via.placeholder.com/400x300/0f1419/ffffff?text=${encodeURIComponent(nome)}`;
         }
-        
+
         card.innerHTML = `
             <img src="${imagem}" alt="${nome}" class="product-image" 
                  onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300/0f1419/ffffff?text=${encodeURIComponent(nome)}'"
@@ -345,7 +345,7 @@ function renderProducts(filterCategory = 'todos') {
         `;
         container.appendChild(card);
     });
-    
+
     // Renderizar carrossel de recomendações
     renderRecommendationsCarousel();
 }
@@ -355,24 +355,24 @@ let currentCarouselIndex = 0;
 function renderRecommendationsCarousel() {
     const container = document.getElementById('carouselContainer');
     if (!container) return;
-    
+
     // Pegar produtos favoritos ou os primeiros 6 produtos como recomendações
     const recommendations = products.filter(p => {
         const favorito = p.favorito !== undefined ? p.favorito : p.favorite;
         return favorito;
     }).slice(0, 6);
-    const defaultRecommendations = recommendations.length < 3 
-        ? products.slice(0, 6) 
+    const defaultRecommendations = recommendations.length < 3
+        ? products.slice(0, 6)
         : recommendations;
-    
+
     if (defaultRecommendations.length === 0) {
         container.innerHTML = '';
         return;
     }
-    
+
     container.innerHTML = '';
     currentCarouselIndex = 0;
-    
+
     defaultRecommendations.forEach((product, index) => {
         const card = document.createElement('div');
         card.className = 'carousel-item';
@@ -381,12 +381,12 @@ function renderRecommendationsCarousel() {
         const descricao = product.descricao || product.description || '';
         const preco = product.preco ? parseFloat(product.preco) : (product.price ? parseFloat(product.price) : 0);
         let imagem = product.imagemUrl || product.image || '';
-        
+
         // Se não houver imagem, usar placeholder
         if (!imagem || imagem.trim() === '') {
             imagem = `https://via.placeholder.com/300x200/0f1419/ffffff?text=${encodeURIComponent(nome)}`;
         }
-        
+
         card.innerHTML = `
             <img src="${imagem}" alt="${nome}" class="carousel-image" 
                  onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200/0f1419/ffffff?text=${encodeURIComponent(nome)}'"
@@ -399,7 +399,7 @@ function renderRecommendationsCarousel() {
         `;
         container.appendChild(card);
     });
-    
+
     updateCarouselButtons();
 }
 
@@ -407,20 +407,20 @@ function renderRecommendationsCarousel() {
 function updateCarouselButtons() {
     const container = document.getElementById('carouselContainer');
     if (!container) return;
-    
+
     const items = container.querySelectorAll('.carousel-item');
     const prevBtn = document.getElementById('carouselPrev');
     const nextBtn = document.getElementById('carouselNext');
-    
+
     if (items.length <= 3) {
         if (prevBtn) prevBtn.style.display = 'none';
         if (nextBtn) nextBtn.style.display = 'none';
         return;
     }
-    
+
     if (prevBtn) prevBtn.style.display = 'flex';
     if (nextBtn) nextBtn.style.display = 'flex';
-    
+
     if (prevBtn) prevBtn.disabled = currentCarouselIndex === 0;
     if (nextBtn) nextBtn.disabled = currentCarouselIndex >= items.length - 3;
 }
@@ -429,16 +429,16 @@ function updateCarouselButtons() {
 function moveCarousel(direction) {
     const container = document.getElementById('carouselContainer');
     if (!container) return;
-    
+
     const items = container.querySelectorAll('.carousel-item');
     const maxIndex = Math.max(0, items.length - 3);
-    
+
     if (direction === 'next') {
         currentCarouselIndex = Math.min(currentCarouselIndex + 1, maxIndex);
     } else {
         currentCarouselIndex = Math.max(currentCarouselIndex - 1, 0);
     }
-    
+
     items.forEach((item, index) => {
         if (index >= currentCarouselIndex && index < currentCarouselIndex + 3) {
             item.style.display = 'block';
@@ -446,7 +446,7 @@ function moveCarousel(direction) {
             item.style.display = 'none';
         }
     });
-    
+
     updateCarouselButtons();
 }
 
@@ -501,18 +501,18 @@ function showReservaConfirmation(reserva) {
         max-width: 400px;
         animation: slideIn 0.4s ease-out;
     `;
-    
+
     // Formatar data
     const dataReserva = new Date(reserva.data + 'T' + reserva.hora);
-    const dataFormatada = dataReserva.toLocaleDateString('pt-BR', { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
+    const dataFormatada = dataReserva.toLocaleDateString('pt-BR', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit'
     });
-    
+
     confirmationDiv.innerHTML = `
         <div style="font-size: 48px; margin-bottom: 15px;">✓</div>
         <h2 style="margin: 0 0 20px 0; font-size: 24px;">Reserva Confirmada!</h2>
@@ -524,7 +524,7 @@ function showReservaConfirmation(reserva) {
         </div>
         <p style="margin-top: 20px; font-size: 14px; opacity: 0.9;">Entraremos em contato em breve para confirmar!</p>
     `;
-    
+
     // Adicionar estilos de animação
     if (!document.getElementById('reservaConfirmationStyles')) {
         const style = document.createElement('style');
@@ -551,10 +551,10 @@ function showReservaConfirmation(reserva) {
         `;
         document.head.appendChild(style);
     }
-    
+
     // Adicionar ao body
     document.body.appendChild(confirmationDiv);
-    
+
     // Remover após 4 segundos
     setTimeout(() => {
         confirmationDiv.style.animation = 'fadeOut 0.4s ease-out forwards';
@@ -597,18 +597,18 @@ function closeAdminModal() {
 async function renderAdminItems(searchTerm = '') {
     const container = document.getElementById('adminItemsList');
     container.innerHTML = '';
-    
+
     // Buscar produtos na API se houver termo de busca
     let filteredProducts = products;
     if (searchTerm && searchTerm.trim()) {
         filteredProducts = await buscarProdutos(searchTerm);
     }
-    
+
     if (filteredProducts.length === 0) {
         container.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.4); padding: 2rem;">Nenhum item encontrado.</p>';
         return;
     }
-    
+
     filteredProducts.forEach(product => {
         const item = document.createElement('div');
         item.className = 'admin-item';
@@ -636,17 +636,17 @@ async function renderAdminItems(searchTerm = '') {
 function renderFavorites() {
     const container = document.getElementById('favoritesList');
     container.innerHTML = '';
-    
+
     const favorites = products.filter(p => {
         const favorito = p.favorito !== undefined ? p.favorito : p.favorite;
         return favorito;
     });
-    
+
     if (favorites.length === 0) {
         container.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.4); padding: 2rem;">Nenhum item favoritado ainda.</p>';
         return;
     }
-    
+
     favorites.forEach(product => {
         const item = document.createElement('div');
         item.className = 'admin-item';
@@ -683,9 +683,9 @@ let editingProductId = null;
 function editProduct(id) {
     const product = products.find(p => p.id === id);
     if (!product) return;
-    
+
     editingProductId = id;
-    
+
     // Preencher formulário
     document.getElementById('itemNome').value = product.nome || product.name;
     document.getElementById('itemDescricao').value = product.descricao || product.description;
@@ -694,21 +694,21 @@ function editProduct(id) {
     document.getElementById('itemCategoria').value = categoria ? categoria.toLowerCase() : 'pizzas';
     document.getElementById('itemImagem').value = product.imagemUrl || product.image;
     document.getElementById('itemFavorito').checked = product.favorito !== undefined ? product.favorito : (product.favorite || false);
-    
+
     // Limpar preview e arquivo
     document.getElementById('itemImagemFile').value = '';
     document.getElementById('imagePreview').innerHTML = '';
-    
+
     // Mostrar preview da imagem atual se houver
     const imagemAtual = product.imagemUrl || product.image;
     if (imagemAtual) {
         showImagePreview(imagemAtual);
     }
-    
+
     // Mudar texto do botão
     const submitBtn = document.querySelector('#createItemForm .btn-submit');
     submitBtn.textContent = 'Salvar Alterações';
-    
+
     // Mudar para aba de criação
     switchAdminTab('create');
 }
@@ -731,12 +731,12 @@ async function uploadImagem(file) {
             // Fallback para API local
             const formData = new FormData();
             formData.append('file', file);
-            
+
             const response = await fetch(`${API_BASE_URL}/upload/imagem`, {
                 method: 'POST',
                 body: formData
             });
-            
+
             if (response.ok) {
                 const result = await response.json();
                 return result.url;
@@ -755,9 +755,9 @@ async function uploadImagem(file) {
 async function saveProductEdit(id) {
     const product = products.find(p => p.id === id);
     if (!product) return;
-    
+
     let imagemUrl = document.getElementById('itemImagem').value;
-    
+
     // Se houver arquivo selecionado, fazer upload
     const fileInput = document.getElementById('itemImagemFile');
     if (fileInput.files && fileInput.files.length > 0) {
@@ -768,12 +768,12 @@ async function saveProductEdit(id) {
             return;
         }
     }
-    
+
     // Se não houver imagem (nem URL nem arquivo), usar a atual
     if (!imagemUrl || imagemUrl.trim() === '') {
         imagemUrl = product.imagemUrl || product.image || '';
     }
-    
+
     const produtoAtualizado = {
         id: id,
         nome: document.getElementById('itemNome').value,
@@ -783,7 +783,7 @@ async function saveProductEdit(id) {
         imagemUrl: imagemUrl,
         favorito: document.getElementById('itemFavorito').checked
     };
-    
+
     const sucesso = await atualizarProduto(id, produtoAtualizado);
     if (sucesso) {
         await carregarProdutos();
@@ -820,22 +820,22 @@ async function deleteProduct(id) {
 async function renderReservas() {
     const container = document.getElementById('reservasList');
     container.innerHTML = '';
-    
+
     // Recarregar reservas da API
     await carregarReservas();
-    
+
     if (reservas.length === 0) {
         container.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.4); padding: 2rem;">Nenhuma reserva registrada ainda.</p>';
         return;
     }
-    
+
     // Ordenar reservas por data e hora (mais recentes primeiro)
     const reservasOrdenadas = [...reservas].sort((a, b) => {
         const dataA = new Date(a.data + 'T' + a.hora);
         const dataB = new Date(b.data + 'T' + b.hora);
         return dataB - dataA;
     });
-    
+
     reservasOrdenadas.forEach((reserva) => {
         const item = document.createElement('div');
         item.className = 'admin-item';
@@ -873,11 +873,11 @@ async function deleteReserva(id) {
 function switchAdminTab(tab) {
     document.querySelectorAll('.admin-tab').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.admin-panel').forEach(panel => panel.classList.add('hidden'));
-    
+
     document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
     const tabName = tab.charAt(0).toUpperCase() + tab.slice(1);
     document.getElementById(`admin${tabName}`).classList.remove('hidden');
-    
+
     // Se for a aba de reservas, atualizar a lista
     if (tab === 'reservas') {
         renderReservas();
@@ -938,7 +938,7 @@ async function carregarProdutos() {
                 throw new Error('API não disponível');
             }
         }
-        
+
         // Converter formato se necessário (Supabase retorna campos diferentes)
         products = products.map(p => ({
             id: p.id,
@@ -955,7 +955,7 @@ async function carregarProdutos() {
             favorito: p.favorito !== undefined ? p.favorito : (p.favorite || false),
             favorite: p.favorito !== undefined ? p.favorito : (p.favorite || false)
         }));
-        
+
         renderProducts(currentFilter);
         setTimeout(() => {
             renderRecommendationsCarousel();
@@ -979,7 +979,7 @@ async function salvarProduto(produto) {
             imagem_url: produto.imagemUrl,
             favorito: produto.favorito || false
         };
-        
+
         let novoProduto;
         if (typeof supabaseService !== 'undefined' && supabaseService) {
             novoProduto = await supabaseService.criarProduto(produtoSupabase);
@@ -995,7 +995,7 @@ async function salvarProduto(produto) {
                 return false;
             }
         }
-        
+
         if (novoProduto) {
             products.push(novoProduto);
             return true;
@@ -1018,7 +1018,7 @@ async function atualizarProduto(id, produto) {
             imagem_url: produto.imagemUrl,
             favorito: produto.favorito || false
         };
-        
+
         if (typeof supabaseService !== 'undefined' && supabaseService) {
             const resultado = await supabaseService.atualizarProduto(id, produtoSupabase);
             return resultado !== null;
@@ -1126,7 +1126,7 @@ async function carregarReservas() {
                 return false;
             }
         }
-        
+
         reservas = reservasAPI.map(r => ({
             id: r.id,
             nome: r.nome,
@@ -1183,10 +1183,10 @@ async function validarSenhaAdmin(senha) {
 document.addEventListener('DOMContentLoaded', () => {
     // Carregar produtos da API
     carregarProdutos();
-    
+
     // Carregar reservas da API
     carregarReservas();
-    
+
     // Adicionar event listeners aos botões de filtro
     const filterButtons = document.querySelectorAll('.filter-btn');
     filterButtons.forEach(btn => {
@@ -1197,13 +1197,13 @@ document.addEventListener('DOMContentLoaded', () => {
             renderProducts(category);
         });
     });
-    
+
     // Event listener para botão "Reservar Mesa"
     const reservarBtn = document.querySelector('.nav-btn:last-child');
     if (reservarBtn) {
         reservarBtn.addEventListener('click', openReservaModal);
     }
-    
+
     // Event listener para botão "Cardápio"
     const cardapioBtn = document.querySelector('.nav-btn.active');
     if (cardapioBtn) {
@@ -1212,30 +1212,30 @@ document.addEventListener('DOMContentLoaded', () => {
             closeAdminModal();
         });
     }
-    
+
     // Event listeners para modais
     document.getElementById('closeReserva').addEventListener('click', closeReservaModal);
     document.getElementById('closeAdmin').addEventListener('click', closeAdminModal);
     document.getElementById('closeAdminLogin').addEventListener('click', closeAdminLoginModal);
-    
+
     // Fechar modal ao clicar fora
     document.getElementById('reservaModal').addEventListener('click', (e) => {
         if (e.target.id === 'reservaModal') closeReservaModal();
     });
-    
+
     document.getElementById('adminModal').addEventListener('click', (e) => {
         if (e.target.id === 'adminModal') closeAdminModal();
     });
-    
+
     document.getElementById('adminLoginModal').addEventListener('click', (e) => {
         if (e.target.id === 'adminLoginModal') closeAdminLoginModal();
     });
-    
+
     // Formulário de login admin
     document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const senha = document.getElementById('adminPassword').value;
-        
+
         // Validar senha na API
         const autenticado = await validarSenhaAdmin(senha);
         if (autenticado) {
@@ -1247,7 +1247,7 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('adminPassword').focus();
         }
     });
-    
+
     // Formulário de reserva
     document.getElementById('reservaForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -1259,7 +1259,7 @@ document.addEventListener('DOMContentLoaded', () => {
             pessoas: document.getElementById('reservaPessoas').value,
             obs: document.getElementById('reservaObs').value
         };
-        
+
         // Salvar reserva na API
         const reservaCriada = await criarReservaAPI(reserva);
         if (reservaCriada) {
@@ -1270,18 +1270,18 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Erro ao criar reserva. Tente novamente.');
         }
     });
-    
+
     // Formulário de criar item
     document.getElementById('createItemForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         if (editingProductId) {
             await saveProductEdit(editingProductId);
             return;
         }
-        
+
         let imagemUrl = document.getElementById('itemImagem').value;
-        
+
         // Se houver arquivo selecionado, fazer upload
         const fileInput = document.getElementById('itemImagemFile');
         if (fileInput.files && fileInput.files.length > 0) {
@@ -1292,13 +1292,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
         }
-        
+
         // Validar se tem imagem (URL ou arquivo)
         if (!imagemUrl || imagemUrl.trim() === '') {
             alert('Por favor, forneça uma imagem (URL ou arquivo)');
             return;
         }
-        
+
         const newProduct = {
             nome: document.getElementById('itemNome').value,
             descricao: document.getElementById('itemDescricao').value,
@@ -1307,7 +1307,7 @@ document.addEventListener('DOMContentLoaded', () => {
             imagemUrl: imagemUrl,
             favorito: document.getElementById('itemFavorito').checked
         };
-        
+
         const sucesso = await salvarProduto(newProduct);
         if (sucesso) {
             await carregarProdutos();
@@ -1322,7 +1322,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Erro ao criar item. Tente novamente.');
         }
     });
-    
+
     // Event listener para preview de imagem ao selecionar arquivo
     const fileInput = document.getElementById('itemImagemFile');
     if (fileInput) {
@@ -1335,14 +1335,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     e.target.value = '';
                     return;
                 }
-                
+
                 // Validar tamanho (máximo 5MB)
                 if (file.size > 5 * 1024 * 1024) {
                     alert('A imagem deve ter no máximo 5MB');
                     e.target.value = '';
                     return;
                 }
-                
+
                 // Mostrar preview
                 const reader = new FileReader();
                 reader.onload = (event) => {
@@ -1352,7 +1352,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
     // Event listener para preview ao colar URL
     const urlInput = document.getElementById('itemImagem');
     if (urlInput) {
@@ -1363,17 +1363,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
     // Admin tabs
     document.querySelectorAll('.admin-tab').forEach(btn => {
         btn.addEventListener('click', () => {
             switchAdminTab(btn.dataset.tab);
         });
     });
-    
+
     // Admin trigger button - abre modal de login
     document.getElementById('adminTrigger').addEventListener('click', openAdminLoginModal);
-    
+
     // Busca no admin
     const adminSearchInput = document.getElementById('adminSearchInput');
     if (adminSearchInput) {
@@ -1385,7 +1385,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 300); // Debounce de 300ms
         });
     }
-    
+
+
     // Carrossel de recomendações
     const carouselPrev = document.getElementById('carouselPrev');
     const carouselNext = document.getElementById('carouselNext');
@@ -1394,6 +1395,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (carouselNext) {
         carouselNext.addEventListener('click', () => moveCarousel('next'));
+    }
+
+    // Event listener para formulário de reserva
+    const reservaForm = document.getElementById('reservaForm');
+    if (reservaForm) {
+        reservaForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const reserva = {
+                nome: document.getElementById('reservaNome').value,
+                telefone: document.getElementById('reservaTelefone').value,
+                data: document.getElementById('reservaData').value,
+                hora: document.getElementById('reservaHora').value,
+                pessoas: parseInt(document.getElementById('reservaPessoas').value),
+                obs: document.getElementById('reservaObs').value || ''
+            };
+
+            try {
+                const sucesso = await criarReservaAPI(reserva);
+                if (sucesso) {
+                    closeReservaModal();
+                    showReservaConfirmation(reserva);
+                } else {
+                    alert('Erro ao criar reserva. Tente novamente.');
+                }
+            } catch (error) {
+                console.error('Erro ao criar reserva:', error);
+                alert('Erro ao criar reserva. Tente novamente.');
+            }
+        });
     }
 });
 

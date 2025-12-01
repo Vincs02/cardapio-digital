@@ -18,8 +18,8 @@ export default function handler(req, res) {
         const { senha } = req.body;
 
         // Senha hardcoded para manter compatibilidade com o backend Java original
-        // Em produção, idealmente usaria variável de ambiente: process.env.ADMIN_PASSWORD
-        const SENHA_CORRETA = process.env.VITE_ADMIN_PASSWORD || '0202';
+        // Vercel serverless functions não têm acesso a variáveis VITE_*
+        const SENHA_CORRETA = process.env.ADMIN_PASSWORD || '0202';
 
         if (senha === SENHA_CORRETA) {
             return res.status(200).json({

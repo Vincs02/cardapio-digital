@@ -29,7 +29,7 @@ build/
 .vercel/
 
 # Uploads
-uploads/
+# uploads/
 
 # Java
 *.class

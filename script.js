@@ -1379,6 +1379,36 @@ document.addEventListener('DOMContentLoaded', () => {
         carouselNext.addEventListener('click', () => moveCarousel('next'));
     }
 
+    // Event listener para formulário de reserva
+    const reservaForm = document.getElementById('reservaForm');
+    if (reservaForm) {
+        reservaForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const reserva = {
+                nome: document.getElementById('reservaNome').value,
+                telefone: document.getElementById('reservaTelefone').value,
+                data: document.getElementById('reservaData').value,
+                hora: document.getElementById('reservaHora').value,
+                pessoas: parseInt(document.getElementById('reservaPessoas').value),
+                obs: document.getElementById('reservaObs').value || ''
+            };
+
+            try {
+                const sucesso = await criarReservaAPI(reserva);
+                if (sucesso) {
+                    closeReservaModal();
+                    showReservaConfirmation(reserva);
+                } else {
+                    alert('Erro ao criar reserva. Tente novamente.');
+                }
+            } catch (error) {
+                console.error('Erro ao criar reserva:', error);
+                alert('Erro ao criar reserva. Tente novamente.');
+            }
+        });
+    }
+
 });
 
 // Exportar funções globais

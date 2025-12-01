@@ -298,8 +298,8 @@ const supabaseService = {
                     telefone: reserva.telefone,
                     data: reserva.data,
                     horario: reserva.hora,
-                    numero_pessoas: parseInt(reserva.pessoas),
-                    observacoes: reserva.obs || ''
+                    numero_pessoas: reserva.numero_pessoas || parseInt(reserva.pessoas) || 1,
+                    observacoes: reserva.observacoes || reserva.obs || ''
                 })
             });
             if (response.ok) return await response.json();
@@ -313,8 +313,8 @@ const supabaseService = {
                 telefone: reserva.telefone,
                 data: reserva.data,
                 horario: reserva.hora,
-                numero_pessoas: parseInt(reserva.pessoas),
-                observacoes: reserva.obs || ''
+                numero_pessoas: reserva.numero_pessoas || parseInt(reserva.pessoas) || 1,
+                observacoes: reserva.observacoes || reserva.obs || ''
             }])
             .select()
             .single();

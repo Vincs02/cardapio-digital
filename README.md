@@ -1,173 +1,127 @@
-# Cardápio Digital - Sabor & Cia
+# 📖 Documentação Técnica - Sabor & Arte
 
-Sistema de Cardápio Digital desenvolvido em **Java** com **Programação Orientada a Objetos (POO)** utilizando **Spring Boot**.
+## 1. Visão Geral do Projeto
+O **Sabor & Arte** é um cardápio digital interativo com sistema de reservas e painel administrativo. O projeto foi desenvolvido como uma Single Page Application (SPA) focada em performance, SEO e experiência do usuário (UX), utilizando tecnologias web modernas e serviços em nuvem.
 
-## 📋 Descrição
+---
 
-Este projeto é uma aplicação web completa para gerenciamento de cardápio digital de restaurante, desenvolvida como trabalho acadêmico para a matéria de Programação Orientada a Objetos. O sistema permite:
+## 2. Tecnologias Utilizadas
 
-- Visualização de produtos do cardápio por categoria
-- Sistema de reservas de mesa
-- Painel administrativo para gerenciar produtos
-- Sistema de favoritos
-- Interface moderna e responsiva
+### Frontend
+- **HTML5**: Estrutura semântica e acessível.
+- **CSS3 (Vanilla)**: Estilização responsiva, variáveis CSS (Custom Properties), Flexbox e Grid. Design "Dark Mode" com acentos dourados (`#C5A059`).
+- **JavaScript (ES6+)**: Lógica da aplicação, manipulação do DOM, comunicação assíncrona com APIs.
 
-## 🏗️ Estrutura do Projeto (POO)
+### Backend & Banco de Dados
+- **Supabase**: Plataforma Backend-as-a-Service (BaaS).
+  - **PostgreSQL**: Banco de dados relacional.
+  - **Storage**: Armazenamento de imagens dos produtos.
+  - **Auth/RLS**: Segurança a nível de linha (Row Level Security).
+- **Vercel Serverless Functions**: 
+  - `api/admin/login.js`: Função segura para autenticação do administrador.
 
-### Classes de Modelo (`br.com.saborcia.model`)
+### Infraestrutura & Deploy
+- **Vercel**: Hospedagem do frontend e funções serverless.
+- **Git/GitHub**: Controle de versão.
 
-- **`Produto`**: Classe que representa um produto do cardápio
-  - Atributos: id, nome, descricao, preco, categoria, imagemUrl, favorito
-  - Métodos: getters/setters, toggleFavorito(), toString(), equals(), hashCode()
+---
 
-- **`Reserva`**: Classe que representa uma reserva de mesa
-  - Atributos: id, nome, telefone, data, horario, numeroPessoas, observacoes, confirmada
-  - Métodos: getters/setters, confirmar()
+## 3. Estrutura de Arquivos
 
-- **`Categoria`**: Enum que representa as categorias de produtos
-  - Valores: TODOS, PIZZAS, BEBIDAS, SOBREMESAS, ENTRADAS, PRATOS
-  - Método estático: fromString()
-
-### Classes de Serviço (`br.com.saborcia.service`)
-
-- **`CardapioService`**: Gerencia os produtos do cardápio
-  - Padrão Singleton
-  - Métodos: adicionarProduto(), buscarPorId(), listarTodos(), filtrarPorCategoria(), listarFavoritos(), atualizarProduto(), removerProduto(), toggleFavorito()
-  - Uso de Collections (List) e Streams API
-
-- **`ReservaService`**: Gerencia as reservas de mesa
-  - Padrão Singleton
-  - Métodos: criarReserva(), buscarPorId(), listarTodas(), confirmarReserva(), removerReserva()
-
-### Classes de Controller (`br.com.saborcia.controller`)
-
-- **`CardapioController`**: REST Controller para endpoints de produtos
-  - Endpoints: GET /api/produtos, GET /api/produtos/{id}, GET /api/produtos/categoria/{categoria}, GET /api/produtos/favoritos, POST /api/produtos, PUT /api/produtos/{id}, DELETE /api/produtos/{id}, POST /api/produtos/{id}/favorito
-
-- **`ReservaController`**: REST Controller para endpoints de reservas
-  - Endpoints: POST /api/reservas, GET /api/reservas, GET /api/reservas/{id}, POST /api/reservas/{id}/confirmar
-
-- **`WebController`**: Controller para servir páginas HTML
-
-## 🛠️ Tecnologias Utilizadas
-
-- **Java 17**
-- **Spring Boot 3.1.5**
-- **Maven** (gerenciamento de dependências)
-- **HTML5, CSS3, JavaScript** (frontend)
-- **REST API** (comunicação frontend-backend)
-
-## 📦 Conceitos de POO Aplicados
-
-1. **Encapsulamento**: Uso de atributos privados com getters/setters
-2. **Herança**: (preparado para extensão futura)
-3. **Polimorfismo**: Uso de interfaces e classes abstratas (Spring Boot)
-4. **Abstração**: Separação de responsabilidades (Model, Service, Controller)
-5. **Classes e Objetos**: Todas as entidades são representadas como classes
-6. **Enum**: Categoria como enum
-7. **Singleton**: Padrão aplicado nos Services
-8. **Collections**: Uso de List, Streams API
-9. **Anotações**: Uso de anotações Spring (@RestController, @Service, etc.)
-
-## 🚀 Como Executar
-
-### Pré-requisitos
-
-- Java 17 ou superior
-- Maven 3.6+ instalado
-- Navegador web moderno
-
-### Passos para Execução
-
-1. **Clone ou baixe o projeto**
-
-2. **Compile o projeto usando Maven:**
-   ```bash
-   mvn clean install
-   ```
-
-3. **Execute a aplicação:**
-   ```bash
-   mvn spring-boot:run
-   ```
-   
-   Ou execute diretamente a classe `CardapioApplication.java`
-
-4. **Acesse no navegador:**
-   ```
-   http://localhost:8080
-   ```
-
-## 📁 Estrutura de Diretórios
-
-```
-cardapio-menu/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── br/com/saborcia/
-│   │   │       ├── CardapioApplication.java
-│   │   │       ├── model/
-│   │   │       │   ├── Produto.java
-│   │   │       │   ├── Reserva.java
-│   │   │       │   └── Categoria.java
-│   │   │       ├── service/
-│   │   │       │   ├── CardapioService.java
-│   │   │       │   └── ReservaService.java
-│   │   │       └── controller/
-│   │   │           ├── CardapioController.java
-│   │   │           ├── ReservaController.java
-│   │   │           └── WebController.java
-│   │   └── resources/
-│   │       ├── application.properties
-│   │       └── static/
-│   │           ├── index.html
-│   │           ├── styles.css
-│   │           └── script.js
-│   └── test/
-├── pom.xml
-└── README.md
+```text
+/
+├── index.html              # Página única da aplicação (SPA)
+├── styles.css              # Estilos globais e responsivos
+├── script.js               # Lógica principal (UI, eventos, cache local)
+├── supabase-client.js      # Camada de comunicação com o Supabase
+├── package.json            # Metadados do projeto
+├── vercel.json             # Configuração de deploy e headers (CORS)
+└── api/
+    └── admin/
+        └── login.js        # Serverless function para login seguro
 ```
 
-## 🎯 Funcionalidades
+---
 
-### Cliente
-- ✅ Visualizar cardápio completo
-- ✅ Filtrar produtos por categoria
-- ✅ Fazer reserva de mesa
-- ✅ Interface responsiva
+## 4. Funcionalidades
 
-### Administrador
-- ✅ Visualizar todos os produtos
-- ✅ Criar novos produtos
-- ✅ Editar produtos existentes
-- ✅ Excluir produtos
-- ✅ Marcar/desmarcar favoritos
-- ✅ Visualizar lista de favoritos
+### 👤 Para o Cliente
+1.  **Visualização de Cardápio**: Listagem de produtos com imagem, nome, descrição e preço.
+2.  **Filtros por Categoria**: Pizzas, Bebidas, Sobremesas, Entradas, Pratos Principais.
+3.  **Carrossel de Recomendações**: Destaque para produtos marcados como favoritos/recomendados.
+4.  **Reserva de Mesa**: Formulário integrado para solicitar reservas (Nome, Telefone, Data, Hora, Pessoas).
+5.  **Responsividade**: Interface adaptada para Celulares, Tablets e Desktops.
 
-## 📝 Endpoints da API
+### ⚙️ Painel Administrativo
+*Acesso via botão de engrenagem (⚙️) na navbar. Senha padrão: `0202`.*
 
-### Produtos
-- `GET /api/produtos` - Lista todos os produtos
-- `GET /api/produtos/{id}` - Busca produto por ID
-- `GET /api/produtos/categoria/{categoria}` - Filtra por categoria
-- `GET /api/produtos/favoritos` - Lista produtos favoritos
-- `POST /api/produtos` - Cria novo produto
-- `PUT /api/produtos/{id}` - Atualiza produto
-- `DELETE /api/produtos/{id}` - Remove produto
-- `POST /api/produtos/{id}/favorito` - Alterna favorito
+1.  **Gerenciamento de Produtos (CRUD)**:
+    -   Criar novos produtos (Upload de imagem ou URL).
+    -   Editar produtos existentes.
+    -   Excluir produtos.
+    -   Marcar como "Recomendação da Casa".
+2.  **Gerenciamento de Reservas**:
+    -   Visualizar lista de reservas ordenadas por data.
+    -   Excluir reservas atendidas ou canceladas.
+3.  **Busca**: Filtrar itens do cardápio pelo nome.
 
-### Reservas
-- `POST /api/reservas` - Cria nova reserva
-- `GET /api/reservas` - Lista todas as reservas
-- `GET /api/reservas/{id}` - Busca reserva por ID
-- `POST /api/reservas/{id}/confirmar` - Confirma reserva
+---
 
-## 👨‍💻 Desenvolvido para
+## 5. Esquema do Banco de Dados (Supabase)
 
-Trabalho acadêmico - Matéria de Programação Orientada a Objetos (POO)
+### Tabela: `produtos`
+| Coluna | Tipo | Descrição |
+| :--- | :--- | :--- |
+| `id` | `int8` | Chave primária (Auto-incremento) |
+| `nome` | `text` | Nome do prato/bebida |
+| `descricao` | `text` | Detalhes do item |
+| `preco` | `numeric` | Preço do item |
+| `categoria` | `text` | Categoria (pizzas, bebidas, etc.) |
+| `imagem_url` | `text` | URL da imagem (Supabase Storage ou externa) |
+| `favorito` | `boolean` | Define se aparece no carrossel de destaques |
 
-## 📄 Licença
+### Tabela: `reservas`
+| Coluna | Tipo | Descrição |
+| :--- | :--- | :--- |
+| `id` | `int8` | Chave primária (Auto-incremento) |
+| `nome` | `text` | Nome do cliente |
+| `telefone` | `text` | Contato do cliente |
+| `data` | `date` | Data da reserva (YYYY-MM-DD) |
+| `horario` | `time` | Hora da reserva (HH:MM:SS) |
+| `numero_pessoas` | `int4` | Quantidade de pessoas |
+| `observacoes` | `text` | Notas adicionais (opcional) |
 
-Este projeto foi desenvolvido para fins educacionais.
+---
 
+## 6. Configuração e Variáveis de Ambiente
+
+Para que o projeto funcione corretamente (localmente ou na Vercel), as seguintes variáveis são necessárias:
+
+### No Frontend (`index.html` / `supabase-client.js`)
+O frontend utiliza `window.SUPABASE_CONFIG` para injetar as chaves públicas.
+- `VITE_SUPABASE_URL`: URL do projeto Supabase.
+- `VITE_SUPABASE_ANON_KEY`: Chave pública (anon/public) do Supabase.
+
+### No Backend (Vercel Environment Variables)
+Variáveis secretas para as Serverless Functions.
+- `ADMIN_PASSWORD`: Senha para acesso ao painel admin (ex: `0202`).
+
+---
+
+## 7. Fluxo de Dados
+
+1.  **Inicialização**: O `supabase-client.js` inicializa a conexão usando as chaves configuradas.
+2.  **Leitura**: `script.js` solicita dados via `supabaseService`. Se falhar, tenta usar `fetch` para API local ou dados mockados (fallback).
+3.  **Escrita (Reservas/Produtos)**:
+    -   Dados são validados no frontend.
+    -   Enviados via `supabaseClient.from('tabela').insert()`.
+    -   Políticas RLS (Row Level Security) no banco garantem que inserções públicas sejam permitidas na tabela `reservas`.
+
+## 8. Como Rodar Localmente
+
+1.  Clone o repositório.
+2.  Abra o arquivo `index.html` no navegador (ou use uma extensão como "Live Server" no VS Code).
+3.  Para testar a conexão com o banco real, certifique-se de que o bloco `window.SUPABASE_CONFIG` no `index.html` está descomentado e com as credenciais corretas.
+
+---
+*Documentação gerada em 01/12/2025.*

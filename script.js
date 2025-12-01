@@ -507,8 +507,8 @@ function showReservaConfirmation(reserva) {
             <div style="background: rgba(197, 160, 89, 0.1); padding: 1.5rem; border: 1px solid rgba(197, 160, 89, 0.3); margin-bottom: 1.5rem;">
                 <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Nome:</strong> ${reserva.nome}</p>
                 <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Telefone:</strong> ${reserva.telefone}</p>
-                <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Data/Hora:</strong> ${reserva.data_hora}</p>
-                <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Pessoas:</strong> ${reserva.numero_pessoas}</p>
+                <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Data/Hora:</strong> ${reserva.data} às ${reserva.hora}</p>
+                <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Pessoas:</strong> ${reserva.pessoas}</p>
             </div>
             <p style="color: #cccccc; font-size: 0.95rem; margin-top: 1.5rem;">Entraremos em contato em breve para confirmar!</p>
         </div>

@@ -1095,15 +1095,35 @@ async function buscarProdutos(termo) {
         if (typeof supabaseService !== 'undefined' && supabaseService) {
             return await supabaseService.buscarProdutos(termo);
         } else {
-            const response = await fetch(`${API_BASE_URL}/produtos/buscar?termo=${encodeURIComponent(termo)}`);
+            // Adicionar timeout para API local
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 2000);
+
+            const response = await fetch(`${API_BASE_URL}/produtos/buscar?termo=${encodeURIComponent(termo)}`, {
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+
             if (response.ok) {
                 return await response.json();
             }
-            return [];
+            throw new Error('API retornou erro');
         }
     } catch (error) {
-        console.error('Erro na busca:', error);
-        return [];
+        console.warn('Erro na busca API, usando filtro local:', error);
+        // Fallback: filtrar localmente
+        if (!termo || termo.trim() === '') return products;
+
+        const termoLower = termo.toLowerCase();
+        return products.filter(p => {
+            const nome = (p.nome || p.name || '').toLowerCase();
+            const desc = (p.descricao || p.description || '').toLowerCase();
+            const cat = (p.categoria ? (p.categoria.descricao || p.categoria) : (p.category || '')).toLowerCase();
+
+            return nome.includes(termoLower) ||
+                desc.includes(termoLower) ||
+                cat.includes(termoLower);
+        });
     }
 }
 

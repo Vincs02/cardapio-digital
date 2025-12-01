@@ -930,9 +930,10 @@ function loadReservasFromLocalStorage() {
 // Funções para comunicação com API REST / Supabase
 async function carregarProdutos() {
     try {
+        let fetchedProducts = [];
         // Tentar usar Supabase primeiro, depois API local
         if (typeof supabaseService !== 'undefined' && supabaseService) {
-            products = await supabaseService.listarProdutos();
+            fetchedProducts = await supabaseService.listarProdutos();
         } else {
             // Adicionar timeout para não ficar esperando API local eternamente
             const controller = new AbortController();
@@ -943,32 +944,39 @@ async function carregarProdutos() {
                 clearTimeout(timeoutId);
 
                 if (response.ok) {
-                    products = await response.json();
+                    fetchedProducts = await response.json();
                 } else {
                     throw new Error('API retornou erro');
                 }
             } catch (e) {
                 clearTimeout(timeoutId);
-                throw new Error('API não disponível ou timeout');
+                console.warn('API não disponível ou timeout, usando dados locais');
+                // Não lançar erro para não cair no catch geral que chama loadFromLocalStorage desnecessariamente
+                // se já temos os dados em memória
             }
         }
 
-        // Converter formato se necessário (Supabase retorna campos diferentes)
-        products = products.map(p => ({
-            id: p.id,
-            nome: p.nome || p.name,
-            name: p.nome || p.name,
-            descricao: p.descricao || p.description,
-            description: p.descricao || p.description,
-            preco: p.preco || p.price,
-            price: p.preco || p.price,
-            categoria: p.categoria || (p.categoria_obj ? p.categoria_obj.descricao : null),
-            categoria_obj: p.categoria_obj || { descricao: p.categoria },
-            imagemUrl: p.imagem_url || p.imagemUrl || p.image,
-            image: p.imagem_url || p.imagemUrl || p.image,
-            favorito: p.favorito !== undefined ? p.favorito : (p.favorite || false),
-            favorite: p.favorito !== undefined ? p.favorito : (p.favorite || false)
-        }));
+        // Só atualizar se vieram produtos
+        if (fetchedProducts && fetchedProducts.length > 0) {
+            // Converter formato se necessário (Supabase retorna campos diferentes)
+            products = fetchedProducts.map(p => ({
+                id: p.id,
+                nome: p.nome || p.name,
+                name: p.nome || p.name,
+                descricao: p.descricao || p.description,
+                description: p.descricao || p.description,
+                preco: p.preco || p.price,
+                price: p.preco || p.price,
+                categoria: p.categoria || (p.categoria_obj ? p.categoria_obj.descricao : null),
+                categoria_obj: p.categoria_obj || { descricao: p.categoria },
+                imagemUrl: p.imagem_url || p.imagemUrl || p.image,
+                image: p.imagem_url || p.imagemUrl || p.image,
+                favorito: p.favorito !== undefined ? p.favorito : (p.favorite || false),
+                favorite: p.favorito !== undefined ? p.favorito : (p.favorite || false)
+            }));
+        } else {
+            console.log('Nenhum produto retornado da API, mantendo dados iniciais.');
+        }
 
         renderProducts(currentFilter);
         setTimeout(() => {

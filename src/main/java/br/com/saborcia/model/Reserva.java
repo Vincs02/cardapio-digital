@@ -1,123 +1,131 @@
 package br.com.saborcia.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-/**
- * Classe que representa uma reserva de mesa.
- * Demonstra encapsulamento e uso de tipos de data do Java 8+.
- */
+@Entity
+@Table(name = "reservas")
 public class Reserva {
-    private int id;
-    private String nome;
-    private String telefone;
-    private LocalDate data;
-    private LocalTime horario;
-    private int numeroPessoas;
-    private String observacoes;
-    private boolean confirmada;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private int id;
 
-    // Construtor padrão
-    public Reserva() {
-        this.confirmada = false;
-    }
+        @Column(nullable = false)
+        private String nome;
 
-    // Construtor completo
-    public Reserva(int id, String nome, String telefone, LocalDate data, 
-                   LocalTime horario, int numeroPessoas, String observacoes) {
-        this.id = id;
-        this.nome = nome;
-        this.telefone = telefone;
-        this.data = data;
-        this.horario = horario;
-        this.numeroPessoas = numeroPessoas;
-        this.observacoes = observacoes;
-        this.confirmada = false;
-    }
+        @Column(nullable = false)
+        private String telefone;
 
-    // Getters e Setters
-    public int getId() {
-        return id;
-    }
+        @Column(nullable = false)
+        private LocalDate data;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+        @Column(nullable = false)
+        private LocalTime horario;
 
-    public String getNome() {
-        return nome;
-    }
+        @Column(name = "numero_pessoas", nullable = false)
+        private int numeroPessoas;
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+        @Column(columnDefinition = "TEXT")
+        private String observacoes;
 
-    public String getTelefone() {
-        return telefone;
-    }
+        private boolean confirmada;
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+        public Reserva() {
+                this.confirmada = false;
+        }
 
-    public LocalDate getData() {
-        return data;
-    }
+        public Reserva(int id, String nome, String telefone, LocalDate data,
+                        LocalTime horario, int numeroPessoas, String observacoes) {
+                this.id = id;
+                this.nome = nome;
+                this.telefone = telefone;
+                this.data = data;
+                this.horario = horario;
+                this.numeroPessoas = numeroPessoas;
+                this.observacoes = observacoes;
+                this.confirmada = false;
+        }
 
-    public void setData(LocalDate data) {
-        this.data = data;
-    }
+        public int getId() {
+                return id;
+        }
 
-    public LocalTime getHorario() {
-        return horario;
-    }
+        public void setId(int id) {
+                this.id = id;
+        }
 
-    public void setHorario(LocalTime horario) {
-        this.horario = horario;
-    }
+        public String getNome() {
+                return nome;
+        }
 
-    public int getNumeroPessoas() {
-        return numeroPessoas;
-    }
+        public void setNome(String nome) {
+                this.nome = nome;
+        }
 
-    public void setNumeroPessoas(int numeroPessoas) {
-        this.numeroPessoas = numeroPessoas;
-    }
+        public String getTelefone() {
+                return telefone;
+        }
 
-    public String getObservacoes() {
-        return observacoes;
-    }
+        public void setTelefone(String telefone) {
+                this.telefone = telefone;
+        }
 
-    public void setObservacoes(String observacoes) {
-        this.observacoes = observacoes;
-    }
+        public LocalDate getData() {
+                return data;
+        }
 
-    public boolean isConfirmada() {
-        return confirmada;
-    }
+        public void setData(LocalDate data) {
+                this.data = data;
+        }
 
-    public void setConfirmada(boolean confirmada) {
-        this.confirmada = confirmada;
-    }
+        public LocalTime getHorario() {
+                return horario;
+        }
 
-    /**
-     * Método para confirmar a reserva
-     */
-    public void confirmar() {
-        this.confirmada = true;
-    }
+        public void setHorario(LocalTime horario) {
+                this.horario = horario;
+        }
 
-    @Override
-    public String toString() {
-        return "Reserva{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", data=" + data +
-                ", horario=" + horario +
-                ", numeroPessoas=" + numeroPessoas +
-                ", confirmada=" + confirmada +
-                '}';
-    }
+        public int getNumeroPessoas() {
+                return numeroPessoas;
+        }
+
+        public void setNumeroPessoas(int numeroPessoas) {
+                this.numeroPessoas = numeroPessoas;
+        }
+
+        public String getObservacoes() {
+                return observacoes;
+        }
+
+        public void setObservacoes(String observacoes) {
+                this.observacoes = observacoes;
+        }
+
+        public boolean isConfirmada() {
+                return confirmada;
+        }
+
+        public void setConfirmada(boolean confirmada) {
+                this.confirmada = confirmada;
+        }
+
+        public boolean confirmar() {
+                this.confirmada = true;
+                return true;
+        }
+
+        @Override
+        public String toString() {
+                return "Reserva{" +
+                                "id=" + id +
+                                ", nome='" + nome + '\'' +
+                                ", telefone='" + telefone + '\'' +
+                                ", data=" + data +
+                                ", horario=" + horario +
+                                ", numeroPessoas=" + numeroPessoas +
+                                ", confirmada=" + confirmada +
+                                '}';
+        }
 }
-

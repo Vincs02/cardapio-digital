@@ -11,10 +11,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-/**
- * Controller REST que gerencia as requisições relacionadas a reservas.
- * Demonstra tratamento de requisições HTTP e validação.
- */
 @RestController
 @RequestMapping("/api/reservas")
 @CrossOrigin(origins = "*")
@@ -22,39 +18,29 @@ public class ReservaController {
 
     private final ReservaService reservaService;
 
-    // Injeção de dependência via construtor
     public ReservaController(ReservaService reservaService) {
         this.reservaService = reservaService;
     }
 
-    /**
-     * Endpoint para criar uma nova reserva
-     */
     @PostMapping
     public ResponseEntity<Reserva> criarReserva(@RequestBody ReservaRequest request) {
-        Reserva reserva = reservaService.criarReserva(
-                request.getNome(),
-                request.getTelefone(),
-                request.getData(),
-                request.getHorario(),
-                request.getNumeroPessoas(),
-                request.getObservacoes()
-        );
-        return ResponseEntity.status(HttpStatus.CREATED).body(reserva);
+        Reserva reserva = new Reserva();
+        reserva.setNome(request.getNome());
+        reserva.setTelefone(request.getTelefone());
+        reserva.setData(request.getData());
+        reserva.setHorario(request.getHorario());
+        reserva.setNumeroPessoas(request.getNumeroPessoas());
+        reserva.setObservacoes(request.getObservacoes());
+
+        Reserva savedReserva = reservaService.criarReserva(reserva);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedReserva);
     }
 
-    /**
-     * Endpoint para listar todas as reservas
-     */
     @GetMapping
     public ResponseEntity<List<Reserva>> listarTodas() {
-        List<Reserva> reservas = reservaService.listarTodas();
-        return ResponseEntity.ok(reservas);
+        return ResponseEntity.ok(reservaService.listarTodas());
     }
 
-    /**
-     * Endpoint para buscar reserva por ID
-     */
     @GetMapping("/{id}")
     public ResponseEntity<Reserva> buscarPorId(@PathVariable int id) {
         Reserva reserva = reservaService.buscarPorId(id);
@@ -64,34 +50,22 @@ public class ReservaController {
         return ResponseEntity.notFound().build();
     }
 
-    /**
-     * Endpoint para confirmar uma reserva
-     */
     @PostMapping("/{id}/confirmar")
     public ResponseEntity<Void> confirmarReserva(@PathVariable int id) {
-        boolean sucesso = reservaService.confirmarReserva(id);
-        if (sucesso) {
+        if (reservaService.confirmarReserva(id)) {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }
 
-    /**
-     * Endpoint para deletar uma reserva
-     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarReserva(@PathVariable int id) {
-        boolean removido = reservaService.removerReserva(id);
-        if (removido) {
+        if (reservaService.removerReserva(id)) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
 
-    /**
-     * Classe interna para receber dados da requisição
-     * Demonstra o uso de classes internas em POO
-     */
     public static class ReservaRequest {
         private String nome;
         private String telefone;
@@ -102,7 +76,6 @@ public class ReservaController {
         private int numeroPessoas;
         private String observacoes;
 
-        // Getters e Setters
         public String getNome() {
             return nome;
         }
@@ -152,4 +125,3 @@ public class ReservaController {
         }
     }
 }
-

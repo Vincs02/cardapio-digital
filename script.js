@@ -715,26 +715,20 @@ function showImagePreview(imageSrc) {
 // Função para fazer upload de imagem
 async function uploadImagem(file) {
     try {
-        // Tentar Supabase primeiro
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            return await supabaseService.uploadImagem(file);
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await fetch(`${API_BASE_URL}/upload/imagem`, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            return result.url;
         } else {
-            // Fallback para API local
-            const formData = new FormData();
-            formData.append('file', file);
-
-            const response = await fetch(`${API_BASE_URL}/upload/imagem`, {
-                method: 'POST',
-                body: formData
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                return result.url;
-            } else {
-                const error = await response.json();
-                throw new Error(error.erro || 'Erro ao fazer upload');
-            }
+            const error = await response.json();
+            throw new Error(error.erro || 'Erro ao fazer upload');
         }
     } catch (error) {
         console.warn('Erro no upload API, convertendo para Base64 local:', error);
@@ -921,55 +915,38 @@ function loadReservasFromLocalStorage() {
     }
 }
 
-// Funções para comunicação com API REST / Supabase
+// Funções para comunicação com API REST
 async function carregarProdutos() {
     try {
         let fetchedProducts = [];
-        // Tentar usar Supabase primeiro, depois API local
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            fetchedProducts = await supabaseService.listarProdutos();
-        } else {
-            // Adicionar timeout para não ficar esperando API local eternamente
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 segundos de timeout
 
-            try {
-                const response = await fetch(`${API_BASE_URL}/produtos`, { signal: controller.signal });
-                clearTimeout(timeoutId);
-
-                if (response.ok) {
-                    fetchedProducts = await response.json();
-                } else {
-                    throw new Error('API retornou erro');
-                }
-            } catch (e) {
-                clearTimeout(timeoutId);
-                console.warn('API não disponível ou timeout, usando dados locais');
-                // Tentar carregar do localStorage se a API falhar
-                loadFromLocalStorage();
+        try {
+            const response = await fetch(`${API_BASE_URL}/produtos`);
+            if (response.ok) {
+                fetchedProducts = await response.json();
+            } else {
+                throw new Error('API retornou erro');
             }
+        } catch (e) {
+            console.warn('API não disponível, usando dados locais');
+            loadFromLocalStorage();
+            renderProducts(currentFilter);
+            return;
         }
 
         // Só atualizar se vieram produtos
         if (fetchedProducts && fetchedProducts.length > 0) {
-            // Converter formato se necessário (Supabase retorna campos diferentes)
             products = fetchedProducts.map(p => ({
                 id: p.id,
-                nome: p.nome || p.name,
-                name: p.nome || p.name,
-                descricao: p.descricao || p.description,
-                description: p.descricao || p.description,
-                preco: p.preco || p.price,
-                price: p.preco || p.price,
-                categoria: p.categoria || (p.categoria_obj ? p.categoria_obj.descricao : null),
-                categoria_obj: p.categoria_obj || { descricao: p.categoria },
-                imagemUrl: p.imagem_url || p.imagemUrl || p.image,
-                image: p.imagem_url || p.imagemUrl || p.image,
-                favorito: p.favorito !== undefined ? p.favorito : (p.favorite || false),
-                favorite: p.favorito !== undefined ? p.favorito : (p.favorite || false)
+                name: p.nome,
+                description: p.descricao,
+                price: p.preco,
+                category: p.categoria ? p.categoria.toLowerCase() : 'outros',
+                image: p.imagemUrl,
+                favorite: p.favorito
             }));
         } else {
-            console.log('Nenhum produto retornado da API, mantendo dados iniciais.');
+            console.log('Nenhum produto retornado da API.');
         }
 
         renderProducts(currentFilter);
@@ -978,7 +955,6 @@ async function carregarProdutos() {
         }, 100);
     } catch (error) {
         console.error('Erro ao carregar produtos:', error);
-        // Fallback para dados locais
         loadFromLocalStorage();
         renderProducts(currentFilter);
     }
@@ -986,37 +962,38 @@ async function carregarProdutos() {
 
 async function salvarProduto(produto) {
     try {
-        // Converter para formato Supabase
-        const produtoSupabase = {
+        // Converter para formato Java API
+        const produtoApi = {
             nome: produto.nome,
             descricao: produto.descricao,
             preco: produto.preco,
             categoria: produto.categoria,
-            imagem_url: produto.imagemUrl,
+            imagemUrl: produto.imagemUrl,
             favorito: produto.favorito || false
         };
 
-        let novoProduto;
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            novoProduto = await supabaseService.criarProduto(produtoSupabase);
-        } else {
-            const response = await fetch(`${API_BASE_URL}/produtos`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(produto)
-            });
-            if (response.ok) {
-                novoProduto = await response.json();
-            } else {
-                return false;
-            }
-        }
+        const response = await fetch(`${API_BASE_URL}/produtos`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(produtoApi)
+        });
 
-        if (novoProduto) {
-            products.push(novoProduto);
+        if (response.ok) {
+            const novoProduto = await response.json();
+            // Adicionar ao array local convertendo formato
+            products.push({
+                id: novoProduto.id,
+                name: novoProduto.nome,
+                description: novoProduto.descricao,
+                price: novoProduto.preco,
+                category: novoProduto.categoria ? novoProduto.categoria.toLowerCase() : 'outros',
+                image: novoProduto.imagemUrl,
+                favorite: novoProduto.favorito
+            });
             return true;
+        } else {
+            return false;
         }
-        return false;
     } catch (error) {
         console.warn('Erro ao salvar na API, salvando localmente:', error);
         // Fallback: Salvar localmente
@@ -1033,27 +1010,39 @@ async function salvarProduto(produto) {
 
 async function atualizarProduto(id, produto) {
     try {
-        // Converter para formato Supabase
-        const produtoSupabase = {
+        // Converter para formato Java API
+        const produtoApi = {
             nome: produto.nome,
             descricao: produto.descricao,
             preco: produto.preco,
             categoria: produto.categoria,
-            imagem_url: produto.imagemUrl,
+            imagemUrl: produto.imagemUrl,
             favorito: produto.favorito || false
         };
 
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            const resultado = await supabaseService.atualizarProduto(id, produtoSupabase);
-            return resultado !== null;
-        } else {
-            const response = await fetch(`${API_BASE_URL}/produtos/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(produto)
-            });
-            return response.ok;
+        const response = await fetch(`${API_BASE_URL}/produtos/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(produtoApi)
+        });
+
+        if (response.ok) {
+            // Atualizar localmente
+            const index = products.findIndex(p => p.id === id);
+            if (index !== -1) {
+                products[index] = {
+                    ...products[index],
+                    name: produtoApi.nome,
+                    description: produtoApi.descricao,
+                    price: produtoApi.preco,
+                    category: produtoApi.categoria ? produtoApi.categoria.toLowerCase() : 'outros',
+                    image: produtoApi.imagemUrl,
+                    favorite: produtoApi.favorito
+                };
+            }
+            return true;
         }
+        return false;
     } catch (error) {
         console.warn('Erro ao atualizar na API, salvando localmente:', error);
         // Fallback: Atualizar localmente
@@ -1073,14 +1062,10 @@ async function atualizarProduto(id, produto) {
 
 async function deletarProdutoAPI(id) {
     try {
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            return await supabaseService.deletarProduto(id);
-        } else {
-            const response = await fetch(`${API_BASE_URL}/produtos/${id}`, {
-                method: 'DELETE'
-            });
-            return response.ok;
-        }
+        const response = await fetch(`${API_BASE_URL}/produtos/${id}`, {
+            method: 'DELETE'
+        });
+        return response.ok;
     } catch (error) {
         console.error('Erro ao deletar produto:', error);
         return false;
@@ -1089,14 +1074,10 @@ async function deletarProdutoAPI(id) {
 
 async function toggleFavoritoAPI(id) {
     try {
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            return await supabaseService.toggleFavorito(id);
-        } else {
-            const response = await fetch(`${API_BASE_URL}/produtos/${id}/favorito`, {
-                method: 'POST'
-            });
-            return response.ok;
-        }
+        const response = await fetch(`${API_BASE_URL}/produtos/${id}/favorito`, {
+            method: 'POST'
+        });
+        return response.ok;
     } catch (error) {
         console.error('Erro ao alternar favorito:', error);
         return false;
@@ -1105,23 +1086,21 @@ async function toggleFavoritoAPI(id) {
 
 async function buscarProdutos(termo) {
     try {
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            return await supabaseService.buscarProdutos(termo);
-        } else {
-            // Adicionar timeout para API local
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 2000);
+        const response = await fetch(`${API_BASE_URL}/produtos/buscar?termo=${encodeURIComponent(termo)}`);
 
-            const response = await fetch(`${API_BASE_URL}/produtos/buscar?termo=${encodeURIComponent(termo)}`, {
-                signal: controller.signal
-            });
-            clearTimeout(timeoutId);
-
-            if (response.ok) {
-                return await response.json();
-            }
-            throw new Error('API retornou erro');
+        if (response.ok) {
+            const fetchedProducts = await response.json();
+            return fetchedProducts.map(p => ({
+                id: p.id,
+                name: p.nome,
+                description: p.descricao,
+                price: p.preco,
+                category: p.categoria ? p.categoria.toLowerCase() : 'outros',
+                image: p.imagemUrl,
+                favorite: p.favorito
+            }));
         }
+        throw new Error('API retornou erro');
     } catch (error) {
         console.warn('Erro na busca API, usando filtro local:', error);
         // Fallback: filtrar localmente
@@ -1129,9 +1108,9 @@ async function buscarProdutos(termo) {
 
         const termoLower = termo.toLowerCase();
         return products.filter(p => {
-            const nome = (p.nome || p.name || '').toLowerCase();
-            const desc = (p.descricao || p.description || '').toLowerCase();
-            const cat = (p.categoria ? (p.categoria.descricao || p.categoria) : (p.category || '')).toLowerCase();
+            const nome = (p.name || '').toLowerCase();
+            const desc = (p.description || '').toLowerCase();
+            const cat = (p.category || '').toLowerCase();
 
             return nome.includes(termoLower) ||
                 desc.includes(termoLower) ||
@@ -1142,26 +1121,22 @@ async function buscarProdutos(termo) {
 
 async function criarReservaAPI(reserva) {
     try {
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            return await supabaseService.criarReserva(reserva);
-        } else {
-            const response = await fetch(`${API_BASE_URL}/reservas`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    nome: reserva.nome,
-                    telefone: reserva.telefone,
-                    data: reserva.data,
-                    horario: reserva.hora,
-                    numero_pessoas: parseInt(reserva.pessoas) || 1,
-                    observacoes: reserva.obs || ''
-                })
-            });
-            if (response.ok) {
-                return await response.json();
-            }
-            return null;
+        const response = await fetch(`${API_BASE_URL}/reservas`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nome: reserva.nome,
+                telefone: reserva.telefone,
+                data: reserva.data,
+                horario: reserva.hora,
+                numeroPessoas: parseInt(reserva.pessoas) || 1,
+                observacoes: reserva.obs || ''
+            })
+        });
+        if (response.ok) {
+            return await response.json();
         }
+        return null;
     } catch (error) {
         console.warn('Erro ao criar reserva na API, salvando localmente:', error);
         // Fallback: Salvar localmente
@@ -1183,27 +1158,17 @@ async function criarReservaAPI(reserva) {
 
 async function carregarReservas() {
     try {
-        let reservasAPI;
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            reservasAPI = await supabaseService.listarReservas();
-        } else {
-            // Adicionar timeout para não ficar esperando API local eternamente
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 segundos de timeout
-
-            try {
-                const response = await fetch(`${API_BASE_URL}/reservas`, { signal: controller.signal });
-                clearTimeout(timeoutId);
-
-                if (response.ok) {
-                    reservasAPI = await response.json();
-                } else {
-                    throw new Error('API retornou erro');
-                }
-            } catch (e) {
-                clearTimeout(timeoutId);
-                return false;
+        let reservasAPI = [];
+        try {
+            const response = await fetch(`${API_BASE_URL}/reservas`);
+            if (response.ok) {
+                reservasAPI = await response.json();
+            } else {
+                throw new Error('API retornou erro');
             }
+        } catch (e) {
+            console.warn('API não disponível, usando dados locais');
+            return false;
         }
 
         reservas = reservasAPI.map(r => ({
@@ -1211,9 +1176,9 @@ async function carregarReservas() {
             nome: r.nome,
             telefone: r.telefone,
             data: r.data,
-            hora: r.horario || r.hora,
-            pessoas: (r.numero_pessoas || r.numeroPessoas || r.pessoas).toString(),
-            obs: r.observacoes || r.obs || ''
+            hora: r.horario,
+            pessoas: r.numeroPessoas.toString(),
+            obs: r.observacoes || ''
         }));
         return true;
     } catch (error) {
@@ -1224,14 +1189,10 @@ async function carregarReservas() {
 
 async function deletarReservaAPI(id) {
     try {
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            return await supabaseService.deletarReserva(id);
-        } else {
-            const response = await fetch(`${API_BASE_URL}/reservas/${id}`, {
-                method: 'DELETE'
-            });
-            return response.ok;
-        }
+        const response = await fetch(`${API_BASE_URL}/reservas/${id}`, {
+            method: 'DELETE'
+        });
+        return response.ok;
     } catch (error) {
         console.error('Erro ao deletar reserva:', error);
         return false;
@@ -1245,20 +1206,13 @@ async function validarSenhaAdmin(senha) {
     }
 
     try {
-        // Adicionar timeout curto de 2 segundos para não travar
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 2000);
-
         const response = await fetch(`${API_BASE_URL}/admin/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ senha: senha }),
-            signal: controller.signal
+            body: JSON.stringify({ senha: senha })
         });
-
-        clearTimeout(timeoutId);
 
         if (response.ok) {
             const result = await response.json();

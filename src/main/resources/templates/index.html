@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabor & Arte - Cardápio Digital</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <div class="logo-icon">👨‍🍳</div>
+                <span class="logo-text">Sabor & Arte</span>
+            </div>
+            <div class="nav-buttons">
+                <button class="nav-btn active">Cardápio</button>
+                <button class="nav-btn">Reservar Mesa</button>
+                <button class="nav-btn nav-btn-admin" id="adminTriggerNav" title="Área Administrativa">⚙️</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="hero-title">Bem-vindo ao Nosso Cardápio</h1>
+        <p class="hero-subtitle">Descubra nossos pratos especiais e saboreie uma experiência única</p>
+    </section>
+
+    <!-- Filter Bar -->
+    <section class="filters">
+        <div class="filter-container">
+            <a th:href="@{/?categoria=todos}" th:classappend="${categoriaSelecionada == 'todos'} ? 'active' : ''"
+                class="filter-btn">Todos</a>
+            <a th:href="@{/?categoria=pizzas}" th:classappend="${categoriaSelecionada == 'pizzas'} ? 'active' : ''"
+                class="filter-btn">Pizzas</a>
+            <a th:href="@{/?categoria=bebidas}" th:classappend="${categoriaSelecionada == 'bebidas'} ? 'active' : ''"
+                class="filter-btn">Bebidas</a>
+            <a th:href="@{/?categoria=sobremesas}"
+                th:classappend="${categoriaSelecionada == 'sobremesas'} ? 'active' : ''"
+                class="filter-btn">Sobremesas</a>
+            <a th:href="@{/?categoria=entradas}" th:classappend="${categoriaSelecionada == 'entradas'} ? 'active' : ''"
+                class="filter-btn">Entradas</a>
+            <a th:href="@{/?categoria=pratos}" th:classappend="${categoriaSelecionada == 'pratos'} ? 'active' : ''"
+                class="filter-btn">Pratos Principais</a>
+        </div>
+    </section>
+
+    <!-- Products Grid -->
+    <section class="products">
+        <div class="products-container" id="productsContainer">
+            <div th:each="p : ${produtos}" class="product-card">
+                <img th:src="${p.imagemUrl != null ? p.imagemUrl : 'https://via.placeholder.com/400x300/0f1419/ffffff?text=' + ${p.nome}}"
+                    th:alt="${p.nome}" class="product-image" loading="lazy" />
+                <div class="product-card-content">
+                    <h3 class="product-name" th:text="${p.nome}">Nome</h3>
+                    <p class="product-description" th:text="${p.descricao}">Descrição</p>
+                    <div class="product-price" th:text="${#numbers.formatCurrency(p.preco, 'BRL')}">R$ 0,00</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal de Reserva (mantém o mesmo JS) -->
+    <div class="modal" id="reservaModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeReserva">&times;</span>
+            <h2>Reservar Mesa</h2>
+            <form id="reservaForm">
+                <div class="form-group"><label>Nome</label><input type="text" id="reservaNome" required></div>
+                <div class="form-group"><label>Telefone</label><input type="tel" id="reservaTelefone" required></div>
+                <div class="form-group"><label>Data</label><input type="date" id="reservaData" required
+                        style="color-scheme: dark;"></div>
+                <div class="form-group"><label>Horário</label><input type="time" id="reservaHora" required></div>
+                <div class="form-group"><label>Número de Pessoas</label><input type="number" id="reservaPessoas" min="1"
+                        required></div>
+                <div class="form-group"><label>Observações</label><textarea id="reservaObs" rows="3"></textarea></div>
+                <button type="submit" class="btn-submit">Confirmar Reserva</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts (Supabase + custom) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script th:src="@{/supabase-client.js}"></script>
+    <script th:src="@{/script.js}"></script>
+</body>
+
+</html>

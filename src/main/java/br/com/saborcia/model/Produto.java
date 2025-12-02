@@ -1,26 +1,37 @@
 package br.com.saborcia.model;
 
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 
-/**
- * Classe que representa um produto do cardápio.
- * Implementa os conceitos de POO: encapsulamento, construtores, getters e setters.
- */
+@Entity
+@Table(name = "produtos")
 public class Produto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false)
     private String nome;
+
+    @Column(columnDefinition = "TEXT")
     private String descricao;
+
+    @Column(nullable = false)
     private BigDecimal preco;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Categoria categoria;
+
+    @Column(name = "imagem_url")
     private String imagemUrl;
+
     private boolean favorito;
 
-    // Construtor padrão
     public Produto() {
         this.favorito = false;
     }
 
-    // Construtor completo
     public Produto(int id, String nome, String descricao, BigDecimal preco, Categoria categoria, String imagemUrl) {
         this.id = id;
         this.nome = nome;
@@ -31,7 +42,6 @@ public class Produto {
         this.favorito = false;
     }
 
-    // Getters e Setters
     public int getId() {
         return id;
     }
@@ -88,16 +98,11 @@ public class Produto {
         this.favorito = favorito;
     }
 
-    /**
-     * Método para alternar o status de favorito
-     */
-    public void toggleFavorito() {
+    public boolean toggleFavorito() {
         this.favorito = !this.favorito;
+        return this.favorito;
     }
 
-    /**
-     * Método toString para representação em string
-     */
     @Override
     public String toString() {
         return "Produto{" +
@@ -110,13 +115,12 @@ public class Produto {
                 '}';
     }
 
-    /**
-     * Método equals para comparação de objetos
-     */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
         Produto produto = (Produto) obj;
         return id == produto.id;
     }
@@ -126,4 +130,3 @@ public class Produto {
         return Integer.hashCode(id);
     }
 }
-

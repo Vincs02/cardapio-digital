@@ -213,6 +213,20 @@ public class AdminWebController {
     }
 
     /**
+     * Lista de categorias
+     */
+    @GetMapping("/categorias")
+    public String listarCategorias(HttpSession session, Model model) {
+        if (!isAdminLogado(session)) {
+            return "redirect:/admin/web/login";
+        }
+
+        model.addAttribute("categorias", Categoria.values());
+
+        return "admin/categorias";
+    }
+
+    /**
      * Deletar reserva
      */
     @PostMapping("/reservas/deletar/{id}")

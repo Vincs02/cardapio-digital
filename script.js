@@ -1287,8 +1287,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Validar senha na API
         const autenticado = await validarSenhaAdmin(senha);
         if (autenticado) {
-            closeAdminLoginModal();
-            openAdminModal();
+            // Redirecionar para o painel admin Java
+            window.location.href = '/admin/web/dashboard';
         } else {
             alert('Senha incorreta!');
             document.getElementById('adminPassword').value = '';

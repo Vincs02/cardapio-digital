@@ -9,7 +9,7 @@ let products = [
         description: "Molho de tomate, mussarela fresca, manjericão e azeite de oliva extra virgem",
         price: 45.90,
         category: "pizzas",
-        image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -18,7 +18,7 @@ let products = [
         description: "Molho de tomate, mussarela, calabresa fatiada, cebola e azeitonas",
         price: 48.90,
         category: "pizzas",
-        image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -27,7 +27,7 @@ let products = [
         description: "Mussarela, gorgonzola, parmesão e provolone com azeite de oliva",
         price: 52.90,
         category: "pizzas",
-        image: "https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -36,7 +36,7 @@ let products = [
         description: "Refrigerante gelado, lata 350ml",
         price: 6.50,
         category: "bebidas",
-        image: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -45,7 +45,7 @@ let products = [
         description: "Suco fresco de laranja, 500ml",
         price: 8.90,
         category: "bebidas",
-        image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -54,7 +54,7 @@ let products = [
         description: "Água mineral natural, 500ml",
         price: 4.50,
         category: "bebidas",
-        image: "https://images.unsplash.com/photo-1548839140-5a6d0e9e0f1c?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -63,7 +63,7 @@ let products = [
         description: "Sobremesa italiana clássica com café, mascarpone e cacau",
         price: 18.90,
         category: "sobremesas",
-        image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -72,7 +72,7 @@ let products = [
         description: "Brownie quentinho com sorvete de creme e calda de chocolate",
         price: 16.90,
         category: "sobremesas",
-        image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1564355808539-22fda35bed7e?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -81,7 +81,7 @@ let products = [
         description: "Bolinho de chocolate quente com sorvete de baunilha",
         price: 19.90,
         category: "sobremesas",
-        image: "https://images.unsplash.com/photo-1606312619070-d48b4ddaa3b8?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
@@ -90,7 +90,7 @@ let products = [
         description: "Pão italiano tostado com tomate, manjericão e azeite",
         price: 22.90,
         category: "entradas",
-        image: "https://images.unsplash.com/photo-1572441713132-51c75654db73?w=400&h=300&fit=crop",
+        image: "uploads/images/bruschetta.jpg",
         favorite: false
     },
     {
@@ -99,38 +99,29 @@ let products = [
         description: "Fatias finas de carne crua com rúcula, parmesão e azeite",
         price: 35.90,
         category: "entradas",
-        image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
+        image: "uploads/images/carpaccio.jpg",
         favorite: false
     },
     {
         id: 12,
-        name: "Salada Caesar",
-        description: "Alface romana, croutons, parmesão e molho caesar",
-        price: 28.90,
-        category: "entradas",
-        image: "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400&h=300&fit=crop",
-        favorite: false
-    },
-    {
-        id: 13,
         name: "Risotto de Camarão",
         description: "Arroz arbóreo cremoso com camarões frescos e ervas",
         price: 68.90,
         category: "pratos",
-        image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
-        id: 14,
+        id: 13,
         name: "Filé Mignon",
         description: "Filé mignon grelhado com batatas rústicas e molho especial",
         price: 79.90,
         category: "pratos",
-        image: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&h=300&fit=crop",
+        image: "https://images.unsplash.com/photo-1600891964092-4316c288032e?auto=format&fit=crop&w=800&q=80",
         favorite: false
     },
     {
-        id: 15,
+        id: 14,
         name: "Salmão Grelhado",
         description: "Salmão grelhado com legumes salteados e molho de ervas",
         price: 72.90,
@@ -171,7 +162,7 @@ let products = [
         description: "Água mineral com gás, 500ml",
         price: 5.50,
         category: "bebidas",
-        image: "https://images.unsplash.com/photo-1548839140-5a6d0e9e0f1c?w=400&h=300&fit=crop",
+        image: "uploads/images/agua-gas.jpg",
         favorite: false
     },
     {
@@ -189,7 +180,7 @@ let products = [
         description: "Cerveja artesanal gelada, 500ml",
         price: 12.90,
         category: "bebidas",
-        image: "https://images.unsplash.com/photo-1554866585-cd94860890b7?w=400&h=300&fit=crop",
+        image: "uploads/images/cerveja.jpg",
         favorite: false
     },
     {
@@ -216,7 +207,7 @@ let products = [
         description: "Seleção de queijos artesanais com mel e nozes",
         price: 42.90,
         category: "entradas",
-        image: "https://images.unsplash.com/photo-1572441713132-51c75654db73?w=400&h=300&fit=crop",
+        image: "uploads/images/tabua-queijos.jpg",
         favorite: false
     },
     {
@@ -267,17 +258,17 @@ function formatPrice(price) {
 // Função para normalizar categoria
 function normalizarCategoria(categoria) {
     if (!categoria) return '';
-    
+
     // Se for objeto com descricao
     if (typeof categoria === 'object' && categoria.descricao) {
         return categoria.descricao.toLowerCase();
     }
-    
+
     // Se for string
     if (typeof categoria === 'string') {
         return categoria.toLowerCase();
     }
-    
+
     return '';
 }
 
@@ -294,32 +285,32 @@ const categoriaMap = {
 // Função para renderizar produtos
 function renderProducts(filterCategory = 'todos') {
     const container = document.getElementById('productsContainer');
-    
+
     // Filtrar produtos
     let filteredProducts = products;
-    
+
     if (filterCategory !== 'todos') {
         const categoriasFiltro = categoriaMap[filterCategory] || [filterCategory.toLowerCase()];
-        
+
         filteredProducts = products.filter(product => {
             const categoriaProduto = normalizarCategoria(product.categoria || product.category);
-            
+
             // Verificar se a categoria do produto corresponde ao filtro
             return categoriasFiltro.some(cat => {
                 return categoriaProduto.includes(cat) || cat.includes(categoriaProduto);
             });
         });
     }
-    
+
     // Limpar container
     container.innerHTML = '';
-    
+
     // Renderizar produtos
     if (filteredProducts.length === 0) {
         container.innerHTML = '<p style="text-align: center; grid-column: 1 / -1; color: rgba(255,255,255,0.4); font-size: 1rem; padding: 3rem;">Nenhum produto encontrado nesta categoria.</p>';
         return;
     }
-    
+
     filteredProducts.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card';
@@ -327,12 +318,12 @@ function renderProducts(filterCategory = 'todos') {
         const descricao = product.descricao || product.description || '';
         const preco = product.preco ? parseFloat(product.preco) : (product.price ? parseFloat(product.price) : 0);
         let imagem = product.imagemUrl || product.image || '';
-        
+
         // Se não houver imagem, usar placeholder
         if (!imagem || imagem.trim() === '') {
             imagem = `https://via.placeholder.com/400x300/0f1419/ffffff?text=${encodeURIComponent(nome)}`;
         }
-        
+
         card.innerHTML = `
             <img src="${imagem}" alt="${nome}" class="product-image" 
                  onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300/0f1419/ffffff?text=${encodeURIComponent(nome)}'"
@@ -345,7 +336,7 @@ function renderProducts(filterCategory = 'todos') {
         `;
         container.appendChild(card);
     });
-    
+
     // Renderizar carrossel de recomendações
     renderRecommendationsCarousel();
 }
@@ -355,24 +346,24 @@ let currentCarouselIndex = 0;
 function renderRecommendationsCarousel() {
     const container = document.getElementById('carouselContainer');
     if (!container) return;
-    
+
     // Pegar produtos favoritos ou os primeiros 6 produtos como recomendações
     const recommendations = products.filter(p => {
         const favorito = p.favorito !== undefined ? p.favorito : p.favorite;
         return favorito;
     }).slice(0, 6);
-    const defaultRecommendations = recommendations.length < 3 
-        ? products.slice(0, 6) 
+    const defaultRecommendations = recommendations.length < 3
+        ? products.slice(0, 6)
         : recommendations;
-    
+
     if (defaultRecommendations.length === 0) {
         container.innerHTML = '';
         return;
     }
-    
+
     container.innerHTML = '';
     currentCarouselIndex = 0;
-    
+
     defaultRecommendations.forEach((product, index) => {
         const card = document.createElement('div');
         card.className = 'carousel-item';
@@ -381,12 +372,12 @@ function renderRecommendationsCarousel() {
         const descricao = product.descricao || product.description || '';
         const preco = product.preco ? parseFloat(product.preco) : (product.price ? parseFloat(product.price) : 0);
         let imagem = product.imagemUrl || product.image || '';
-        
+
         // Se não houver imagem, usar placeholder
         if (!imagem || imagem.trim() === '') {
             imagem = `https://via.placeholder.com/300x200/0f1419/ffffff?text=${encodeURIComponent(nome)}`;
         }
-        
+
         card.innerHTML = `
             <img src="${imagem}" alt="${nome}" class="carousel-image" 
                  onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200/0f1419/ffffff?text=${encodeURIComponent(nome)}'"
@@ -399,7 +390,7 @@ function renderRecommendationsCarousel() {
         `;
         container.appendChild(card);
     });
-    
+
     updateCarouselButtons();
 }
 
@@ -407,20 +398,20 @@ function renderRecommendationsCarousel() {
 function updateCarouselButtons() {
     const container = document.getElementById('carouselContainer');
     if (!container) return;
-    
+
     const items = container.querySelectorAll('.carousel-item');
     const prevBtn = document.getElementById('carouselPrev');
     const nextBtn = document.getElementById('carouselNext');
-    
+
     if (items.length <= 3) {
         if (prevBtn) prevBtn.style.display = 'none';
         if (nextBtn) nextBtn.style.display = 'none';
         return;
     }
-    
+
     if (prevBtn) prevBtn.style.display = 'flex';
     if (nextBtn) nextBtn.style.display = 'flex';
-    
+
     if (prevBtn) prevBtn.disabled = currentCarouselIndex === 0;
     if (nextBtn) nextBtn.disabled = currentCarouselIndex >= items.length - 3;
 }
@@ -429,16 +420,16 @@ function updateCarouselButtons() {
 function moveCarousel(direction) {
     const container = document.getElementById('carouselContainer');
     if (!container) return;
-    
+
     const items = container.querySelectorAll('.carousel-item');
     const maxIndex = Math.max(0, items.length - 3);
-    
+
     if (direction === 'next') {
         currentCarouselIndex = Math.min(currentCarouselIndex + 1, maxIndex);
     } else {
         currentCarouselIndex = Math.max(currentCarouselIndex - 1, 0);
     }
-    
+
     items.forEach((item, index) => {
         if (index >= currentCarouselIndex && index < currentCarouselIndex + 3) {
             item.style.display = 'block';
@@ -446,7 +437,7 @@ function moveCarousel(direction) {
             item.style.display = 'none';
         }
     });
-    
+
     updateCarouselButtons();
 }
 
@@ -482,6 +473,86 @@ function closeReservaModal() {
     document.getElementById('reservaForm').reset();
 }
 
+// Função para mostrar confirmação de reserva
+function showReservaConfirmation(reserva) {
+    // Criar elemento da mensagem de confirmação
+    const confirmationDiv = document.createElement('div');
+    confirmationDiv.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        backdrop-filter: blur(5px);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    `;
+
+    confirmationDiv.innerHTML = `
+        <div style="
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            border: 2px solid #C5A059;
+            padding: 3rem;
+            border-radius: 0;
+            box-shadow: 0 20px 60px rgba(197, 160, 89, 0.3);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        ">
+            <div style="font-size: 4rem; color: #C5A059; margin-bottom: 1rem;">✓</div>
+            <h2 style="color: #C5A059; font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px;">Reserva Confirmada!</h2>
+            <div style="background: rgba(197, 160, 89, 0.1); padding: 1.5rem; border: 1px solid rgba(197, 160, 89, 0.3); margin-bottom: 1.5rem;">
+                <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Nome:</strong> ${reserva.nome}</p>
+                <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Telefone:</strong> ${reserva.telefone}</p>
+                <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Data/Hora:</strong> ${reserva.data} às ${reserva.hora}</p>
+                <p style="margin: 0.75rem 0; color: #ffffff; font-size: 1rem;"><strong style="color: #C5A059;">Pessoas:</strong> ${reserva.pessoas}</p>
+            </div>
+            <p style="color: #cccccc; font-size: 0.95rem; margin-top: 1.5rem;">Entraremos em contato em breve para confirmar!</p>
+        </div>
+    `;
+
+    // Adicionar animação
+    if (!document.querySelector('#confirmationAnimation')) {
+        const style = document.createElement('style');
+        style.id = 'confirmationAnimation';
+        style.textContent = `
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                    transform: scale(0.9);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+            @keyframes fadeOut {
+                from {
+                    opacity: 1;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Adicionar ao body
+    document.body.appendChild(confirmationDiv);
+
+    // Remover após 4 segundos
+    setTimeout(() => {
+        confirmationDiv.style.animation = 'fadeOut 0.4s ease-out forwards';
+        setTimeout(() => {
+            confirmationDiv.remove();
+        }, 400);
+    }, 4000);
+}
+
 // Função para abrir modal de login admin
 function openAdminLoginModal() {
     const modal = document.getElementById('adminLoginModal');
@@ -495,6 +566,8 @@ function closeAdminLoginModal() {
     modal.classList.remove('active');
     document.getElementById('adminLoginForm').reset();
 }
+
+
 
 // Função para abrir modal de admin
 function openAdminModal() {
@@ -515,18 +588,18 @@ function closeAdminModal() {
 async function renderAdminItems(searchTerm = '') {
     const container = document.getElementById('adminItemsList');
     container.innerHTML = '';
-    
+
     // Buscar produtos na API se houver termo de busca
     let filteredProducts = products;
     if (searchTerm && searchTerm.trim()) {
         filteredProducts = await buscarProdutos(searchTerm);
     }
-    
+
     if (filteredProducts.length === 0) {
         container.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.4); padding: 2rem;">Nenhum item encontrado.</p>';
         return;
     }
-    
+
     filteredProducts.forEach(product => {
         const item = document.createElement('div');
         item.className = 'admin-item';
@@ -554,17 +627,17 @@ async function renderAdminItems(searchTerm = '') {
 function renderFavorites() {
     const container = document.getElementById('favoritesList');
     container.innerHTML = '';
-    
+
     const favorites = products.filter(p => {
         const favorito = p.favorito !== undefined ? p.favorito : p.favorite;
         return favorito;
     });
-    
+
     if (favorites.length === 0) {
         container.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.4); padding: 2rem;">Nenhum item favoritado ainda.</p>';
         return;
     }
-    
+
     favorites.forEach(product => {
         const item = document.createElement('div');
         item.className = 'admin-item';
@@ -601,9 +674,9 @@ let editingProductId = null;
 function editProduct(id) {
     const product = products.find(p => p.id === id);
     if (!product) return;
-    
+
     editingProductId = id;
-    
+
     // Preencher formulário
     document.getElementById('itemNome').value = product.nome || product.name;
     document.getElementById('itemDescricao').value = product.descricao || product.description;
@@ -612,21 +685,21 @@ function editProduct(id) {
     document.getElementById('itemCategoria').value = categoria ? categoria.toLowerCase() : 'pizzas';
     document.getElementById('itemImagem').value = product.imagemUrl || product.image;
     document.getElementById('itemFavorito').checked = product.favorito !== undefined ? product.favorito : (product.favorite || false);
-    
+
     // Limpar preview e arquivo
     document.getElementById('itemImagemFile').value = '';
     document.getElementById('imagePreview').innerHTML = '';
-    
+
     // Mostrar preview da imagem atual se houver
     const imagemAtual = product.imagemUrl || product.image;
     if (imagemAtual) {
         showImagePreview(imagemAtual);
     }
-    
+
     // Mudar texto do botão
     const submitBtn = document.querySelector('#createItemForm .btn-submit');
     submitBtn.textContent = 'Salvar Alterações';
-    
+
     // Mudar para aba de criação
     switchAdminTab('create');
 }
@@ -642,30 +715,30 @@ function showImagePreview(imageSrc) {
 // Função para fazer upload de imagem
 async function uploadImagem(file) {
     try {
-        // Tentar Supabase primeiro
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            return await supabaseService.uploadImagem(file);
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const response = await fetch(`${API_BASE_URL}/upload/imagem`, {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            return result.url;
         } else {
-            // Fallback para API local
-            const formData = new FormData();
-            formData.append('file', file);
-            
-            const response = await fetch(`${API_BASE_URL}/upload/imagem`, {
-                method: 'POST',
-                body: formData
-            });
-            
-            if (response.ok) {
-                const result = await response.json();
-                return result.url;
-            } else {
-                const error = await response.json();
-                throw new Error(error.erro || 'Erro ao fazer upload');
-            }
+            const error = await response.json();
+            throw new Error(error.erro || 'Erro ao fazer upload');
         }
     } catch (error) {
-        console.error('Erro no upload:', error);
-        throw error;
+        console.warn('Erro no upload API, convertendo para Base64 local:', error);
+        // Fallback: Converter para Base64 (Data URL) para funcionar offline
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+            reader.readAsDataURL(file);
+        });
     }
 }
 
@@ -673,9 +746,9 @@ async function uploadImagem(file) {
 async function saveProductEdit(id) {
     const product = products.find(p => p.id === id);
     if (!product) return;
-    
+
     let imagemUrl = document.getElementById('itemImagem').value;
-    
+
     // Se houver arquivo selecionado, fazer upload
     const fileInput = document.getElementById('itemImagemFile');
     if (fileInput.files && fileInput.files.length > 0) {
@@ -686,12 +759,12 @@ async function saveProductEdit(id) {
             return;
         }
     }
-    
+
     // Se não houver imagem (nem URL nem arquivo), usar a atual
     if (!imagemUrl || imagemUrl.trim() === '') {
         imagemUrl = product.imagemUrl || product.image || '';
     }
-    
+
     const produtoAtualizado = {
         id: id,
         nome: document.getElementById('itemNome').value,
@@ -701,7 +774,7 @@ async function saveProductEdit(id) {
         imagemUrl: imagemUrl,
         favorito: document.getElementById('itemFavorito').checked
     };
-    
+
     const sucesso = await atualizarProduto(id, produtoAtualizado);
     if (sucesso) {
         await carregarProdutos();
@@ -738,22 +811,22 @@ async function deleteProduct(id) {
 async function renderReservas() {
     const container = document.getElementById('reservasList');
     container.innerHTML = '';
-    
+
     // Recarregar reservas da API
     await carregarReservas();
-    
+
     if (reservas.length === 0) {
         container.innerHTML = '<p style="text-align: center; color: rgba(255,255,255,0.4); padding: 2rem;">Nenhuma reserva registrada ainda.</p>';
         return;
     }
-    
+
     // Ordenar reservas por data e hora (mais recentes primeiro)
     const reservasOrdenadas = [...reservas].sort((a, b) => {
         const dataA = new Date(a.data + 'T' + a.hora);
         const dataB = new Date(b.data + 'T' + b.hora);
         return dataB - dataA;
     });
-    
+
     reservasOrdenadas.forEach((reserva) => {
         const item = document.createElement('div');
         item.className = 'admin-item';
@@ -791,11 +864,11 @@ async function deleteReserva(id) {
 function switchAdminTab(tab) {
     document.querySelectorAll('.admin-tab').forEach(btn => btn.classList.remove('active'));
     document.querySelectorAll('.admin-panel').forEach(panel => panel.classList.add('hidden'));
-    
+
     document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
     const tabName = tab.charAt(0).toUpperCase() + tab.slice(1);
     document.getElementById(`admin${tabName}`).classList.remove('hidden');
-    
+
     // Se for a aba de reservas, atualizar a lista
     if (tab === 'reservas') {
         renderReservas();
@@ -842,45 +915,46 @@ function loadReservasFromLocalStorage() {
     }
 }
 
-// Funções para comunicação com API REST / Supabase
+// Funções para comunicação com API REST
 async function carregarProdutos() {
     try {
-        // Tentar usar Supabase primeiro, depois API local
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            products = await supabaseService.listarProdutos();
-        } else {
+        let fetchedProducts = [];
+
+        try {
             const response = await fetch(`${API_BASE_URL}/produtos`);
             if (response.ok) {
-                products = await response.json();
+                fetchedProducts = await response.json();
             } else {
-                throw new Error('API não disponível');
+                throw new Error('API retornou erro');
             }
+        } catch (e) {
+            console.warn('API não disponível, usando dados locais');
+            loadFromLocalStorage();
+            renderProducts(currentFilter);
+            return;
         }
-        
-        // Converter formato se necessário (Supabase retorna campos diferentes)
-        products = products.map(p => ({
-            id: p.id,
-            nome: p.nome || p.name,
-            name: p.nome || p.name,
-            descricao: p.descricao || p.description,
-            description: p.descricao || p.description,
-            preco: p.preco || p.price,
-            price: p.preco || p.price,
-            categoria: p.categoria || (p.categoria_obj ? p.categoria_obj.descricao : null),
-            categoria_obj: p.categoria_obj || { descricao: p.categoria },
-            imagemUrl: p.imagem_url || p.imagemUrl || p.image,
-            image: p.imagem_url || p.imagemUrl || p.image,
-            favorito: p.favorito !== undefined ? p.favorito : (p.favorite || false),
-            favorite: p.favorito !== undefined ? p.favorito : (p.favorite || false)
-        }));
-        
+
+        // Só atualizar se vieram produtos
+        if (fetchedProducts && fetchedProducts.length > 0) {
+            products = fetchedProducts.map(p => ({
+                id: p.id,
+                name: p.nome,
+                description: p.descricao,
+                price: p.preco,
+                category: p.categoria ? p.categoria.toLowerCase() : 'outros',
+                image: p.imagemUrl,
+                favorite: p.favorito
+            }));
+        } else {
+            console.log('Nenhum produto retornado da API.');
+        }
+
         renderProducts(currentFilter);
         setTimeout(() => {
             renderRecommendationsCarousel();
         }, 100);
     } catch (error) {
         console.error('Erro ao carregar produtos:', error);
-        // Fallback para dados locais
         loadFromLocalStorage();
         renderProducts(currentFilter);
     }
@@ -888,82 +962,110 @@ async function carregarProdutos() {
 
 async function salvarProduto(produto) {
     try {
-        // Converter para formato Supabase
-        const produtoSupabase = {
+        // Converter para formato Java API
+        const produtoApi = {
             nome: produto.nome,
             descricao: produto.descricao,
             preco: produto.preco,
             categoria: produto.categoria,
-            imagem_url: produto.imagemUrl,
+            imagemUrl: produto.imagemUrl,
             favorito: produto.favorito || false
         };
-        
-        let novoProduto;
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            novoProduto = await supabaseService.criarProduto(produtoSupabase);
-        } else {
-            const response = await fetch(`${API_BASE_URL}/produtos`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(produto)
+
+        const response = await fetch(`${API_BASE_URL}/produtos`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(produtoApi)
+        });
+
+        if (response.ok) {
+            const novoProduto = await response.json();
+            // Adicionar ao array local convertendo formato
+            products.push({
+                id: novoProduto.id,
+                name: novoProduto.nome,
+                description: novoProduto.descricao,
+                price: novoProduto.preco,
+                category: novoProduto.categoria ? novoProduto.categoria.toLowerCase() : 'outros',
+                image: novoProduto.imagemUrl,
+                favorite: novoProduto.favorito
             });
-            if (response.ok) {
-                novoProduto = await response.json();
-            } else {
-                return false;
-            }
-        }
-        
-        if (novoProduto) {
-            products.push(novoProduto);
             return true;
+        } else {
+            return false;
         }
-        return false;
     } catch (error) {
-        console.error('Erro ao salvar produto:', error);
-        return false;
+        console.warn('Erro ao salvar na API, salvando localmente:', error);
+        // Fallback: Salvar localmente
+        const novoProduto = {
+            ...produto,
+            id: nextId++,
+            favorito: produto.favorito || false
+        };
+        products.push(novoProduto);
+        saveToLocalStorage();
+        return true;
     }
 }
 
 async function atualizarProduto(id, produto) {
     try {
-        // Converter para formato Supabase
-        const produtoSupabase = {
+        // Converter para formato Java API
+        const produtoApi = {
             nome: produto.nome,
             descricao: produto.descricao,
             preco: produto.preco,
             categoria: produto.categoria,
-            imagem_url: produto.imagemUrl,
+            imagemUrl: produto.imagemUrl,
             favorito: produto.favorito || false
         };
-        
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            const resultado = await supabaseService.atualizarProduto(id, produtoSupabase);
-            return resultado !== null;
-        } else {
-            const response = await fetch(`${API_BASE_URL}/produtos/${id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(produto)
-            });
-            return response.ok;
+
+        const response = await fetch(`${API_BASE_URL}/produtos/${id}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(produtoApi)
+        });
+
+        if (response.ok) {
+            // Atualizar localmente
+            const index = products.findIndex(p => p.id === id);
+            if (index !== -1) {
+                products[index] = {
+                    ...products[index],
+                    name: produtoApi.nome,
+                    description: produtoApi.descricao,
+                    price: produtoApi.preco,
+                    category: produtoApi.categoria ? produtoApi.categoria.toLowerCase() : 'outros',
+                    image: produtoApi.imagemUrl,
+                    favorite: produtoApi.favorito
+                };
+            }
+            return true;
         }
+        return false;
     } catch (error) {
-        console.error('Erro ao atualizar produto:', error);
+        console.warn('Erro ao atualizar na API, salvando localmente:', error);
+        // Fallback: Atualizar localmente
+        const index = products.findIndex(p => p.id === id);
+        if (index !== -1) {
+            products[index] = {
+                ...products[index],
+                ...produto,
+                favorito: produto.favorito !== undefined ? produto.favorito : products[index].favorito
+            };
+            saveToLocalStorage();
+            return true;
+        }
         return false;
     }
 }
 
 async function deletarProdutoAPI(id) {
     try {
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            return await supabaseService.deletarProduto(id);
-        } else {
-            const response = await fetch(`${API_BASE_URL}/produtos/${id}`, {
-                method: 'DELETE'
-            });
-            return response.ok;
-        }
+        const response = await fetch(`${API_BASE_URL}/produtos/${id}`, {
+            method: 'DELETE'
+        });
+        return response.ok;
     } catch (error) {
         console.error('Erro ao deletar produto:', error);
         return false;
@@ -972,14 +1074,10 @@ async function deletarProdutoAPI(id) {
 
 async function toggleFavoritoAPI(id) {
     try {
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            return await supabaseService.toggleFavorito(id);
-        } else {
-            const response = await fetch(`${API_BASE_URL}/produtos/${id}/favorito`, {
-                method: 'POST'
-            });
-            return response.ok;
-        }
+        const response = await fetch(`${API_BASE_URL}/produtos/${id}/favorito`, {
+            method: 'POST'
+        });
+        return response.ok;
     } catch (error) {
         console.error('Erro ao alternar favorito:', error);
         return false;
@@ -988,71 +1086,99 @@ async function toggleFavoritoAPI(id) {
 
 async function buscarProdutos(termo) {
     try {
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            return await supabaseService.buscarProdutos(termo);
-        } else {
-            const response = await fetch(`${API_BASE_URL}/produtos/buscar?termo=${encodeURIComponent(termo)}`);
-            if (response.ok) {
-                return await response.json();
-            }
-            return [];
+        const response = await fetch(`${API_BASE_URL}/produtos/buscar?termo=${encodeURIComponent(termo)}`);
+
+        if (response.ok) {
+            const fetchedProducts = await response.json();
+            return fetchedProducts.map(p => ({
+                id: p.id,
+                name: p.nome,
+                description: p.descricao,
+                price: p.preco,
+                category: p.categoria ? p.categoria.toLowerCase() : 'outros',
+                image: p.imagemUrl,
+                favorite: p.favorito
+            }));
         }
+        throw new Error('API retornou erro');
     } catch (error) {
-        console.error('Erro na busca:', error);
-        return [];
+        console.warn('Erro na busca API, usando filtro local:', error);
+        // Fallback: filtrar localmente
+        if (!termo || termo.trim() === '') return products;
+
+        const termoLower = termo.toLowerCase();
+        return products.filter(p => {
+            const nome = (p.name || '').toLowerCase();
+            const desc = (p.description || '').toLowerCase();
+            const cat = (p.category || '').toLowerCase();
+
+            return nome.includes(termoLower) ||
+                desc.includes(termoLower) ||
+                cat.includes(termoLower);
+        });
     }
 }
 
 async function criarReservaAPI(reserva) {
     try {
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            return await supabaseService.criarReserva(reserva);
-        } else {
-            const response = await fetch(`${API_BASE_URL}/reservas`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    nome: reserva.nome,
-                    telefone: reserva.telefone,
-                    data: reserva.data,
-                    horario: reserva.hora,
-                    numeroPessoas: parseInt(reserva.pessoas),
-                    observacoes: reserva.obs || ''
-                })
-            });
-            if (response.ok) {
-                return await response.json();
-            }
-            return null;
+        const response = await fetch(`${API_BASE_URL}/reservas`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                nome: reserva.nome,
+                telefone: reserva.telefone,
+                data: reserva.data,
+                horario: reserva.hora,
+                numeroPessoas: parseInt(reserva.pessoas) || 1,
+                observacoes: reserva.obs || ''
+            })
+        });
+        if (response.ok) {
+            return await response.json();
         }
-    } catch (error) {
-        console.error('Erro ao criar reserva:', error);
         return null;
+    } catch (error) {
+        console.warn('Erro ao criar reserva na API, salvando localmente:', error);
+        // Fallback: Salvar localmente
+        const novaReserva = {
+            id: nextReservaId++,
+            nome: reserva.nome,
+            telefone: reserva.telefone,
+            data: reserva.data,
+            hora: reserva.hora,
+            pessoas: reserva.pessoas,
+            obs: reserva.obs || ''
+        };
+        reservas.push(novaReserva);
+        saveReservasToLocalStorage();
+        saveReservaIdToLocalStorage();
+        return novaReserva;
     }
 }
 
 async function carregarReservas() {
     try {
-        let reservasAPI;
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            reservasAPI = await supabaseService.listarReservas();
-        } else {
+        let reservasAPI = [];
+        try {
             const response = await fetch(`${API_BASE_URL}/reservas`);
             if (response.ok) {
                 reservasAPI = await response.json();
             } else {
-                return false;
+                throw new Error('API retornou erro');
             }
+        } catch (e) {
+            console.warn('API não disponível, usando dados locais');
+            return false;
         }
-        
+
         reservas = reservasAPI.map(r => ({
             id: r.id,
             nome: r.nome,
             telefone: r.telefone,
             data: r.data,
-            hora: r.horario || r.hora,
-            pessoas: (r.numero_pessoas || r.numeroPessoas || r.pessoas).toString(),
-            obs: r.observacoes || r.obs || ''
+            hora: r.horario,
+            pessoas: r.numeroPessoas.toString(),
+            obs: r.observacoes || ''
         }));
         return true;
     } catch (error) {
@@ -1063,14 +1189,10 @@ async function carregarReservas() {
 
 async function deletarReservaAPI(id) {
     try {
-        if (typeof supabaseService !== 'undefined' && supabaseService) {
-            return await supabaseService.deletarReserva(id);
-        } else {
-            const response = await fetch(`${API_BASE_URL}/reservas/${id}`, {
-                method: 'DELETE'
-            });
-            return response.ok;
-        }
+        const response = await fetch(`${API_BASE_URL}/reservas/${id}`, {
+            method: 'DELETE'
+        });
+        return response.ok;
     } catch (error) {
         console.error('Erro ao deletar reserva:', error);
         return false;
@@ -1078,6 +1200,11 @@ async function deletarReservaAPI(id) {
 }
 
 async function validarSenhaAdmin(senha) {
+    // Validação local imediata para a senha padrão
+    if (senha === '0202') {
+        return true;
+    }
+
     try {
         const response = await fetch(`${API_BASE_URL}/admin/login`, {
             method: 'POST',
@@ -1086,6 +1213,7 @@ async function validarSenhaAdmin(senha) {
             },
             body: JSON.stringify({ senha: senha })
         });
+
         if (response.ok) {
             const result = await response.json();
             return result.autenticado;
@@ -1093,6 +1221,7 @@ async function validarSenhaAdmin(senha) {
         return false;
     } catch (error) {
         console.error('Erro na autenticação:', error);
+        // Se der erro de conexão (API off), mas a senha for a padrão, já retornamos true no início
         return false;
     }
 }
@@ -1101,10 +1230,10 @@ async function validarSenhaAdmin(senha) {
 document.addEventListener('DOMContentLoaded', () => {
     // Carregar produtos da API
     carregarProdutos();
-    
+
     // Carregar reservas da API
     carregarReservas();
-    
+
     // Adicionar event listeners aos botões de filtro
     const filterButtons = document.querySelectorAll('.filter-btn');
     filterButtons.forEach(btn => {
@@ -1115,13 +1244,14 @@ document.addEventListener('DOMContentLoaded', () => {
             renderProducts(category);
         });
     });
-    
-    // Event listener para botão "Reservar Mesa"
-    const reservarBtn = document.querySelector('.nav-btn:last-child');
+
+    // Event listener para botão "Reservar Mesa" (segundo botão)
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const reservarBtn = navButtons[1]; // Segundo botão é "Reservar Mesa"
     if (reservarBtn) {
         reservarBtn.addEventListener('click', openReservaModal);
     }
-    
+
     // Event listener para botão "Cardápio"
     const cardapioBtn = document.querySelector('.nav-btn.active');
     if (cardapioBtn) {
@@ -1130,75 +1260,51 @@ document.addEventListener('DOMContentLoaded', () => {
             closeAdminModal();
         });
     }
-    
+
     // Event listeners para modais
     document.getElementById('closeReserva').addEventListener('click', closeReservaModal);
     document.getElementById('closeAdmin').addEventListener('click', closeAdminModal);
     document.getElementById('closeAdminLogin').addEventListener('click', closeAdminLoginModal);
-    
+
     // Fechar modal ao clicar fora
     document.getElementById('reservaModal').addEventListener('click', (e) => {
         if (e.target.id === 'reservaModal') closeReservaModal();
     });
-    
+
     document.getElementById('adminModal').addEventListener('click', (e) => {
         if (e.target.id === 'adminModal') closeAdminModal();
     });
-    
+
     document.getElementById('adminLoginModal').addEventListener('click', (e) => {
         if (e.target.id === 'adminLoginModal') closeAdminLoginModal();
     });
-    
+
     // Formulário de login admin
     document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const senha = document.getElementById('adminPassword').value;
-        
+
         // Validar senha na API
         const autenticado = await validarSenhaAdmin(senha);
         if (autenticado) {
-            closeAdminLoginModal();
-            openAdminModal();
+            // Redirecionar para o painel admin Java
+            window.location.href = '/admin/web/dashboard';
         } else {
             alert('Senha incorreta!');
             document.getElementById('adminPassword').value = '';
             document.getElementById('adminPassword').focus();
         }
     });
-    
-    // Formulário de reserva
-    document.getElementById('reservaForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const reserva = {
-            nome: document.getElementById('reservaNome').value,
-            telefone: document.getElementById('reservaTelefone').value,
-            data: document.getElementById('reservaData').value,
-            hora: document.getElementById('reservaHora').value,
-            pessoas: document.getElementById('reservaPessoas').value,
-            obs: document.getElementById('reservaObs').value
-        };
-        
-        // Salvar reserva na API
-        const reservaCriada = await criarReservaAPI(reserva);
-        if (reservaCriada) {
-            alert('Reserva confirmada! Entraremos em contato em breve.');
-            closeReservaModal();
-        } else {
-            alert('Erro ao criar reserva. Tente novamente.');
-        }
-    });
-    
-    // Formulário de criar item
     document.getElementById('createItemForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        
+
         if (editingProductId) {
             await saveProductEdit(editingProductId);
             return;
         }
-        
+
         let imagemUrl = document.getElementById('itemImagem').value;
-        
+
         // Se houver arquivo selecionado, fazer upload
         const fileInput = document.getElementById('itemImagemFile');
         if (fileInput.files && fileInput.files.length > 0) {
@@ -1209,13 +1315,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
         }
-        
+
         // Validar se tem imagem (URL ou arquivo)
         if (!imagemUrl || imagemUrl.trim() === '') {
             alert('Por favor, forneça uma imagem (URL ou arquivo)');
             return;
         }
-        
+
         const newProduct = {
             nome: document.getElementById('itemNome').value,
             descricao: document.getElementById('itemDescricao').value,
@@ -1224,7 +1330,7 @@ document.addEventListener('DOMContentLoaded', () => {
             imagemUrl: imagemUrl,
             favorito: document.getElementById('itemFavorito').checked
         };
-        
+
         const sucesso = await salvarProduto(newProduct);
         if (sucesso) {
             await carregarProdutos();
@@ -1239,7 +1345,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Erro ao criar item. Tente novamente.');
         }
     });
-    
+
     // Event listener para preview de imagem ao selecionar arquivo
     const fileInput = document.getElementById('itemImagemFile');
     if (fileInput) {
@@ -1252,14 +1358,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     e.target.value = '';
                     return;
                 }
-                
+
                 // Validar tamanho (máximo 5MB)
                 if (file.size > 5 * 1024 * 1024) {
                     alert('A imagem deve ter no máximo 5MB');
                     e.target.value = '';
                     return;
                 }
-                
+
                 // Mostrar preview
                 const reader = new FileReader();
                 reader.onload = (event) => {
@@ -1269,7 +1375,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
     // Event listener para preview ao colar URL
     const urlInput = document.getElementById('itemImagem');
     if (urlInput) {
@@ -1280,17 +1386,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
     // Admin tabs
     document.querySelectorAll('.admin-tab').forEach(btn => {
         btn.addEventListener('click', () => {
             switchAdminTab(btn.dataset.tab);
         });
     });
-    
+
     // Admin trigger button - abre modal de login
-    document.getElementById('adminTrigger').addEventListener('click', openAdminLoginModal);
-    
+    const adminTriggerNav = document.getElementById('adminTriggerNav');
+    if (adminTriggerNav) {
+        adminTriggerNav.addEventListener('click', openAdminLoginModal);
+    }
+
     // Busca no admin
     const adminSearchInput = document.getElementById('adminSearchInput');
     if (adminSearchInput) {
@@ -1302,7 +1411,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 300); // Debounce de 300ms
         });
     }
-    
+
+
     // Carrossel de recomendações
     const carouselPrev = document.getElementById('carouselPrev');
     const carouselNext = document.getElementById('carouselNext');
@@ -1312,6 +1422,37 @@ document.addEventListener('DOMContentLoaded', () => {
     if (carouselNext) {
         carouselNext.addEventListener('click', () => moveCarousel('next'));
     }
+
+    // Event listener para formulário de reserva
+    const reservaForm = document.getElementById('reservaForm');
+    if (reservaForm) {
+        reservaForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const reserva = {
+                nome: document.getElementById('reservaNome').value,
+                telefone: document.getElementById('reservaTelefone').value,
+                data: document.getElementById('reservaData').value,
+                hora: document.getElementById('reservaHora').value,
+                pessoas: parseInt(document.getElementById('reservaPessoas').value),
+                obs: document.getElementById('reservaObs').value || ''
+            };
+
+            try {
+                const sucesso = await criarReservaAPI(reserva);
+                if (sucesso) {
+                    closeReservaModal();
+                    showReservaConfirmation(reserva);
+                } else {
+                    alert('Erro ao criar reserva. Tente novamente.');
+                }
+            } catch (error) {
+                console.error('Erro ao criar reserva:', error);
+                alert('Erro ao criar reserva. Tente novamente.');
+            }
+        });
+    }
+
 });
 
 // Exportar funções globais

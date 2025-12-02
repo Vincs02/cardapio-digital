@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sabor & Cia - Cardápio Digital</title>
+    <title>Sabor & Arte - Cardápio Digital</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <div class="logo-icon">🍽️</div>
-                <span class="logo-text">Sabor & Cia</span>
+                <div class="logo-icon">👨‍🍳</div>
+                <span class="logo-text">Sabor & Arte</span>
             </div>
             <div class="nav-buttons">
                 <button class="nav-btn active">Cardápio</button>
                 <button class="nav-btn">Reservar Mesa</button>
+                <button class="nav-btn nav-btn-admin" id="adminTriggerNav" title="Área Administrativa">⚙️</button>
             </div>
         </div>
     </nav>
@@ -45,26 +48,6 @@
             <!-- Products will be dynamically inserted here -->
         </div>
     </section>
-
-    <!-- Recomendações da Casa Carousel -->
-    <section class="recommendations">
-        <div class="recommendations-container">
-            <h2 class="recommendations-title">🍽️ Recomendações da Casa</h2>
-            <div class="carousel-wrapper">
-                <button class="carousel-btn carousel-prev" id="carouselPrev">‹</button>
-                <div class="carousel-container" id="carouselContainer">
-                    <!-- Carousel items will be dynamically inserted here -->
-                </div>
-                <button class="carousel-btn carousel-next" id="carouselNext">›</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Admin Button (discreto no final) -->
-    <div class="admin-trigger" id="adminTrigger" title="Área Administrativa">
-        <span>⚙</span>
-    </div>
-
     <!-- Modal de Reserva -->
     <div class="modal" id="reservaModal">
         <div class="modal-content">
@@ -120,7 +103,7 @@
         <div class="modal-content admin-content">
             <span class="close-modal" id="closeAdmin">&times;</span>
             <h2>Painel Administrativo</h2>
-            
+
             <div class="admin-tabs">
                 <button class="admin-tab active" data-tab="list">Itens</button>
                 <button class="admin-tab" data-tab="create">Novo Item</button>
@@ -132,7 +115,8 @@
                 <div class="admin-search-container">
                     <div class="admin-search-box">
                         <span class="search-icon">🔍</span>
-                        <input type="text" id="adminSearchInput" placeholder="Buscar itens..." class="admin-search-input">
+                        <input type="text" id="adminSearchInput" placeholder="Buscar itens..."
+                            class="admin-search-input">
                     </div>
                 </div>
                 <div class="admin-items-list" id="adminItemsList"></div>
@@ -166,7 +150,8 @@
                         <label>Imagem</label>
                         <div style="display: flex; gap: 1rem; flex-direction: column;">
                             <input type="file" id="itemImagemFile" accept="image/*" style="display: none;">
-                            <button type="button" class="btn-upload" onclick="document.getElementById('itemImagemFile').click()">
+                            <button type="button" class="btn-upload"
+                                onclick="document.getElementById('itemImagemFile').click()">
                                 📷 Escolher Imagem do Computador
                             </button>
                             <div id="imagePreview" style="margin-top: 0.5rem;"></div>
@@ -191,31 +176,33 @@
             <div class="admin-panel hidden" id="adminReservas">
                 <div class="admin-items-list" id="reservasList"></div>
             </div>
-        </div>
-    </div>
 
-    <!-- Supabase Client (via CDN) -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- Configuração do Supabase -->
-    <script src="supabase-client.js"></script>
-    <!-- Script principal -->
-    <script src="script.js"></script>
-    <!-- Inicializar Supabase -->
-    <script>
-        // Inicializar Supabase quando a página carregar
-        document.addEventListener('DOMContentLoaded', function() {
-            // Tentar obter variáveis de ambiente
-            // No Vercel, essas variáveis são injetadas no build
-            // Em desenvolvimento, você precisa configurar manualmente ou usar um servidor de desenvolvimento
-            
-            // Para desenvolvimento local, você pode definir aqui temporariamente:
-            // const SUPABASE_URL = 'https://seu-projeto.supabase.co';
-            // const SUPABASE_KEY = 'sua-chave-anon';
-            
-            // Ou carregar de um arquivo de configuração
-            // Por enquanto, o supabase-client.js tentará usar as variáveis automaticamente
-        });
-    </script>
+            <!-- Configuração do Supabase -->
+            <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+            <script src="supabase-client.js"></script>
+            <!-- Script principal -->
+            <script src="script.js?v=2"></script>
+            <!-- Inicializar Supabase com variáveis -->
+            <script>
+                // Configuração manual para desenvolvimento local
+                // REMOVA ESTE BLOCO EM PRODUÇÃO e use variáveis de ambiente
+                // Para produção na Vercel, configure as variáveis no dashboard
+
+                // Descomente e preencha para testar localmente:
+                window.SUPABASE_CONFIG = {
+                    VITE_SUPABASE_URL: 'https://xcdpqxczwnfrkpkedxgw.supabase.co',
+                    VITE_SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjZHBxeGN6d25mcmtwa2VkeGd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ1MzYxNjUsImV4cCI6MjA4MDExMjE2NX0.VH_bXfzd_2Y664bfIYwWvjqX-L-rAuUgDlY2rmPFFAs'
+                };
+
+                // Inicializar Supabase quando tudo carregar
+                document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(() => {
+                        if (typeof initSupabase === 'function') {
+                            initSupabase();
+                        }
+                    }, 100);
+                });
+            </script>
 </body>
-</html>
 
+</html>

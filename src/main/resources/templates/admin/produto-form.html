@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${acao} + ' Produto'">Produto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .navbar {
+            background: #2a2a2a;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            color: #C5A059;
+            font-size: 1.5rem;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: #444;
+            border-radius: 4px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .form-card {
+            background: #2a2a2a;
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #C5A059;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-group input {
+            width: auto;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background: #C5A059;
+            border: none;
+            border-radius: 4px;
+            color: #1a1a1a;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #d4b06a;
+        }
+
+        .btn-secondary {
+            background: #666;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <h1 th:text="${acao} + ' Produto'">Produto</h1>
+        <a th:href="@{/admin/web/produtos}">← Voltar</a>
+    </nav>
+
+    <div class="container">
+        <div class="form-card">
+            <form th:action="@{/admin/web/produtos/salvar}" th:object="${produto}" method="post">
+                <input type="hidden" th:field="*{id}">
+
+                <div class="form-group">
+                    <label for="nome">Nome *</label>
+                    <input type="text" id="nome" th:field="*{nome}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao">Descrição *</label>
+                    <textarea id="descricao" th:field="*{descricao}" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="preco">Preço (R$) *</label>
+                    <input type="number" id="preco" th:field="*{preco}" step="0.01" min="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="categoria">Categoria *</label>
+                    <select id="categoria" th:field="*{categoria}" required>
+                        <option th:each="cat : ${categorias}" th:value="${cat}" th:text="${cat}">Categoria</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="imagemUrl">URL da Imagem</label>
+                    <input type="url" id="imagemUrl" th:field="*{imagemUrl}"
+                        placeholder="https://exemplo.com/imagem.jpg">
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="favorito" th:field="*{favorito}">
+                    <label for="favorito" style="margin-bottom: 0;">⭐ Marcar como favorito (aparece no destaque)</label>
+                </div>
+
+                <div style="display: flex; gap: 1rem;">
+                    <button type="submit" class="btn" th:text="${acao}">Salvar</button>
+                    <a th:href="@{/admin/web/produtos}" class="btn btn-secondary"
+                        style="text-decoration: none; text-align: center;">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

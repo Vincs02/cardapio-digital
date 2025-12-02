@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Admin</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .navbar {
+            background: #2a2a2a;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar h1 {
+            color: #C5A059;
+            font-size: 1.5rem;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            background: #444;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+        }
+
+        .navbar a:hover {
+            background: #555;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: #4CAF50;
+        }
+
+        .alert-error {
+            background: #f44336;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #fff;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background: #C5A059;
+            border: none;
+            border-radius: 4px;
+            color: #1a1a1a;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #d4b06a;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background: #da190b;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+
+        table {
+            width: 100%;
+            background: #2a2a2a;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+
+        th {
+            background: #333;
+            color: #C5A059;
+        }
+
+        tr:hover {
+            background: #333;
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .favorito {
+            color: #FFD700;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <h1>🍕 Gerenciar Produtos</h1>
+        <div>
+            <a th:href="@{/admin/web/dashboard}">Dashboard</a>
+            <a th:href="@{/admin/web/logout}">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div th:if="${sucesso}" class="alert alert-success" th:text="${sucesso}"></div>
+        <div th:if="${erro}" class="alert alert-error" th:text="${erro}"></div>
+
+        <div class="toolbar">
+            <form th:action="@{/admin/web/produtos}" method="get" class="search-box">
+                <input type="text" name="busca" th:value="${busca}" placeholder="Buscar produtos...">
+            </form>
+            <a th:href="@{/admin/web/produtos/novo}" class="btn">+ Novo Produto</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Favorito</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="p : ${produtos}">
+                    <td th:text="${p.id}">1</td>
+                    <td th:text="${p.nome}">Nome</td>
+                    <td th:text="${p.categoria}">Categoria</td>
+                    <td th:text="${#numbers.formatCurrency(p.preco, 'BRL')}">R$ 0,00</td>
+                    <td>
+                        <span th:if="${p.favorito}" class="favorito">★</span>
+                        <span th:unless="${p.favorito}">☆</span>
+                    </td>
+                    <td class="actions">
+                        <a th:href="@{/admin/web/produtos/editar/{id}(id=${p.id})}" class="btn btn-small">Editar</a>
+                        <form th:action="@{/admin/web/produtos/favorito/{id}(id=${p.id})}" method="post"
+                            style="display:inline;">
+                            <button type="submit" class="btn btn-small">★</button>
+                        </form>
+                        <form th:action="@{/admin/web/produtos/deletar/{id}(id=${p.id})}" method="post"
+                            style="display:inline;" onsubmit="return confirm('Tem certeza?');">
+                            <button type="submit" class="btn btn-small btn-danger">Excluir</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
